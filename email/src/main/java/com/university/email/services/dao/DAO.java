@@ -1,13 +1,15 @@
 package com.university.email.services.dao;
 
 import com.university.email.model.credentials.Credential;
+import com.university.email.model.user.NullUser;
 import com.university.email.model.user.User;
+import com.university.email.model.user.UserInterface;
 
 import java.util.ArrayList;
 
 public class DAO implements IDAO{
     private static DAO instance = new DAO();
-    private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<UserInterface> users = new ArrayList<>();
 
     private DAO(){};
 
@@ -16,21 +18,21 @@ public class DAO implements IDAO{
     }
 
     @Override
-    public User findUserByCredentials(Credential credential) {
-        for(User user: users){
+    public UserInterface findUserByCredentials(Credential credential) {
+        for(UserInterface user: users){
             if(user.getCredential().equals(credential))
                 return user;
         }
-        return null;
+        return new NullUser();
     }
 
     @Override
-    public User findUserByUsername(String username) {
-        for(User user: users){
+    public UserInterface findUserByUsername(String username) {
+        for(UserInterface user: users){
             if(user.getUsername().equals(username))
                 return user;
         }
-        return null;
+        return new NullUser();
     }
 
     @Override

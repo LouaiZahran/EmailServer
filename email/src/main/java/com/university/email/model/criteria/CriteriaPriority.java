@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @AllArgsConstructor
 public class CriteriaPriority implements Criteria{
-    private String priority;
+    private Integer priority;
 
     @Override
     public ArrayList<Email> meetCriteria(ArrayList<Email> emails) {
