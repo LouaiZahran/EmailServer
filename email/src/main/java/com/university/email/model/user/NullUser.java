@@ -32,7 +32,7 @@ public class NullUser implements UserInterface{
     public ArrayList<Contact> getContacts(){
         return null;
     }
-    @Override
+    /*@Override
     public void sendEmail(Email email){
         return;
     }
@@ -51,5 +51,5 @@ public class NullUser implements UserInterface{
     @Override
     public void removeContact(Contact contact){
         return;
-    }
+    }*/
 }
