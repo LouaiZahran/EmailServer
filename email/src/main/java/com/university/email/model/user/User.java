@@ -49,7 +49,7 @@ public class User implements UserInterface {
     public ArrayList<Contact> getContacts(){
         return contacts;
     }
-    /*@Override
+    @Override
     public void sendEmail(Email email){
         emailSender.send(email);
     }
@@ -68,5 +68,5 @@ public class User implements UserInterface {
     @Override
     public void removeContact(Contact contact){
         contacts.remove(contact);
-    }*/
+    }
 }

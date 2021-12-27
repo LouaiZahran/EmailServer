@@ -15,10 +15,9 @@ public interface UserInterface {
     Folder getFolder(String name);
     ArrayList<Folder> getFolders();
     ArrayList<Contact> getContacts();
-    /*
     void sendEmail(Email email);
     void addFolder(String name);
     void removeFolder(String name);
     void addContact(Contact contact);
-    void removeContact(Contact contact);*/
+    void removeContact(Contact contact);
 }
