@@ -71,7 +71,7 @@ class EmailApplicationTests {
 			filteredEmail.print();
 			assertEquals(filteredEmail,exceptedEmail,"Filter Test Failed");
 		}
-
+		dao.saveDAO();
 
 	}
 
