@@ -8,8 +8,14 @@ import { Email } from '../email';
 })
 export class InboxComponent implements OnInit{
   @ViewChild('myDisplay') myDisp!: ElementRef;
+  to!: string;
+  subject!: string;
+  from!:string;
+  content!: string;
+  date!: string;
   email!: Email;
   emails: Email[] = [];
+  allEmails: Email[] = [];
   checkboxes: any[] = [
     {value: '1', checked: false },
     {value: '2', checked: false },
@@ -23,21 +29,26 @@ export class InboxComponent implements OnInit{
     {value: '10', checked: false }
   ]
   selectAll: boolean = false;
-  pageNumber: number = 1;
+  pageNumber: number = 2;
 
   constructor() {}
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.email = new Email('from', 'to', 'subject', 'body', 0);
-    this.emails.push(this.email);
-    for (let index = 0; index < 10; index++) {
-      this.emails.push(new Email('from'+index, 'to', 'subject', 'body', 0));
+    //this.allEmails.push(this.email);
+    for (let index = 0; index < 25; index++) {
+      this.allEmails.push(new Email('from'+index, 'to', 'subject', 'ثباحو علي احلي ناث', 0));
     }
-    
+    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
   }
 
-  on() {
+  on(index : number) {
     this.myDisp.nativeElement.style.display = 'block';
+    this.to = this.emails[index].getTo();
+    this.from = this.emails[index].getFrom();
+    this.subject = this.emails[index].getSubject();
+    this.content = this.emails[index].getBody();
+    this.date = this.emails[index].getDate();
   }
   off(){
     this.myDisp.nativeElement.style.display = 'none';
@@ -47,5 +58,15 @@ export class InboxComponent implements OnInit{
     this.checkboxes.forEach(checkbox => {
       checkbox.checked = this.selectAll;
     });
+  }
+
+  next(){
+    this.pageNumber += 1;
+    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+  }
+
+  prev(){
+    this.pageNumber -= 1;
+    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
   }
 }
