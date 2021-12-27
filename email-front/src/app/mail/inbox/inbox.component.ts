@@ -29,7 +29,7 @@ export class InboxComponent implements OnInit{
     {value: '10', checked: false }
   ]
   selectAll: boolean = false;
-  pageNumber: number = 2;
+  pageNumber: number = 1;
 
   constructor() {}
 
@@ -37,7 +37,7 @@ export class InboxComponent implements OnInit{
     this.email = new Email('from', 'to', 'subject', 'body', 0);
     //this.allEmails.push(this.email);
     for (let index = 0; index < 25; index++) {
-      this.allEmails.push(new Email('from'+index, 'to', 'subject', 'ثباحو علي احلي ناث', 0));
+      this.allEmails.push(new Email('from'+index, 'to', 'subject', 'from'+index, 0));
     }
     this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
   }

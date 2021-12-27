@@ -1,21 +1,21 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="toolbox">
+  <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleCheckboxes()"/>
+  <a class="from">From</a>
+  <a class="subject">Subject</a>
+  <a class="date">Date</a>
+</div>
+
+<div class="toolbox">    
+  <button title="Add to folder"><i class="material-icons">folder</i></button>
+  <button title="Mark as read" class="read"><i class="material-icons">done_all</i></button>
+  <button title="Mark as unread"><i class="material-icons">done_all</i></button>
+  <button title="Delete"><i class="material-icons">delete</i></button>
+  <button title="Previous" class="prev" [disabled] = "pageNumber == 1" (click)="prev()"><i class="material-icons">arrow_back</i></button>
+  <button title="Next" class="next" [disabled] = "allEmails.length - (pageNumber - 1) * 10 <= 10" (click)="next()"><i class="material-icons">arrow_forward</i></button>
+  <span>{{1 + (pageNumber - 1) * 10}}―{{allEmails.length - (pageNumber - 1) * 10 > 10 ? pageNumber * 10 : allEmails.length}} of {{allEmails.length}}</span>
+</div>
 <div id="container">
-  <div class="toolbox">
-    <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleCheckboxes()"/>
-    <a class="from">From</a>
-    <a class="subject">Subject</a>
-    <a class="date">Date</a>
-  </div>
-  
-  <div class="toolbox">    
-    <button title="Add to folder"><i class="material-icons">folder</i></button>
-    <button title="Mark as read" class="read"><i class="material-icons">done_all</i></button>
-    <button title="Mark as unread"><i class="material-icons">done_all</i></button>
-    <button title="Delete"><i class="material-icons">delete</i></button>
-    <button title="Previous" class="prev" [disabled] = "pageNumber == 1" (click)="prev()"><i class="material-icons">arrow_back</i></button>
-    <button title="Next" class="next" [disabled] = "allEmails.length - (pageNumber - 1) * 10 <= 10" (click)="next()"><i class="material-icons">arrow_forward</i></button>
-    <span>{{1 + (pageNumber - 1) * 10}}―{{allEmails.length - (pageNumber - 1) * 10 > 10 ? pageNumber * 10 : allEmails.length}} of {{allEmails.length}}</span>
-  </div>
   <div class="row{{emails[0].read ? '' : ' unread'}}" (click)="on(0)" *ngIf="emails.length > 0">
     <input type="checkbox" [(ngModel)]="checkboxes[0].checked" [value]="checkboxes[0].value" (click)="$event.stopPropagation()"/>
     <span class="from">{{emails[0].getFrom()}}</span>

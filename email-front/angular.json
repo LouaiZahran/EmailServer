@@ -1,9 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "email": {
+    "mail": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/email",
+            "outputPath": "dist/mail",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -68,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "email:build:production"
+              "browserTarget": "mail:build:production"
             },
             "development": {
-              "browserTarget": "email:build:development"
+              "browserTarget": "mail:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "email:build"
+            "browserTarget": "mail:build"
           }
         },
         "test": {
@@ -102,5 +105,5 @@
       }
     }
   },
-  "defaultProject": "email"
+  "defaultProject": "mail"
 }
