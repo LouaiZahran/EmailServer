@@ -56,14 +56,6 @@ public class DAO implements IDAO{
     public void loadDAO(){
         try {
             ObjectMapper mapper=new ObjectMapper();
-            String load="";
-            File file=new File("DAO/users.json");
-            Scanner scan=new Scanner(file);
-            while (scan.hasNextLine()){
-                load+=scan.nextLine();
-            }
-            scan.close();
-
             instance.setUsers(new ArrayList<UserInterface>(
                     mapper.readValue(new File("DAO/users.json"),
                     new TypeReference<ArrayList<User>>() {
