@@ -21,5 +21,5 @@ div:empty::before{
 }
 div#container{
   width: 100%;
-  height: 100%;
+  height: 87%;
 }

@@ -1,0 +1,18 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="layout">
+  <header>
+    <button class="search"> <i class="material-icons">search</i> </button>
+    <input type="text" class="search" placeholder = "Search...">
+    <button class="filter"> <i class="material-icons">filter_list</i> </button>
+  </header>
+  <section><router-outlet></router-outlet></section>
+  <aside>
+    <div class="logo">Mail</div>
+    <button routerLinkActive="active"><a routerLink="/mail/compose">Compose</a></button>
+    <button routerLinkActive="active"><a routerLink="/mail/inbox">Inbox</a></button>
+    <button routerLinkActive="active"><a routerLink="/mail/trash">Trash</a></button>
+    <button routerLinkActive="active"><a routerLink="/mail/sent">Sent</a></button>
+    <button routerLinkActive="active"><a routerLink="/mail/draft">Draft</a></button>
+    <button routerLinkActive="active"><a routerLink="/mail/folders">User Folders</a></button>
+  </aside>
+</div>
