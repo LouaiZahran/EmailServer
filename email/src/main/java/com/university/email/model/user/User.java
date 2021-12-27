@@ -1,5 +1,6 @@
 package com.university.email.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.university.email.model.contact.Contact;
 import com.university.email.model.credentials.Credential;
 import com.university.email.model.email.Email;
@@ -8,11 +9,14 @@ import com.university.email.services.EmailSender;
 
 import java.util.ArrayList;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements UserInterface {
     private final Credential credential;
     private final ArrayList<Folder> folders;
     private final ArrayList<Contact> contacts;
     private final EmailSender emailSender;
+
+
 
     public User(Credential credential){
         this.credential = credential;
@@ -21,6 +25,14 @@ public class User implements UserInterface {
         folders.add(new Folder("Sent"));
         contacts = new ArrayList<>();
         emailSender = EmailSender.getInstance();
+    }
+    public User(){
+        credential=new Credential();
+        folders=new ArrayList<>();
+        folders.add(new Folder("Inbox"));
+        folders.add(new Folder("Sent"));
+        contacts=new ArrayList<>();
+        emailSender=EmailSender.getInstance();
     }
     @Override
     public boolean isNill(){

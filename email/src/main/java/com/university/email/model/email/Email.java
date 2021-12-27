@@ -1,6 +1,7 @@
 package com.university.email.model.email;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 @Getter
+@NoArgsConstructor
 public class Email implements Comparable<Email> {
     private String sender;
     private Queue<String> receiver=new LinkedList<>();

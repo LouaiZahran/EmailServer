@@ -1,5 +1,6 @@
 package com.university.email.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.university.email.model.contact.Contact;
 import com.university.email.model.credentials.Credential;
 import com.university.email.model.email.Email;
@@ -7,7 +8,9 @@ import com.university.email.model.folder.Folder;
 
 import java.util.ArrayList;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NullUser implements UserInterface{
+    public NullUser(){}
     @Override
     public boolean isNill() {
         return true;
