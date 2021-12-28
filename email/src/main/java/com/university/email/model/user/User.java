@@ -29,8 +29,6 @@ public class User implements UserInterface {
     public User(){
         credential=new Credential();
         folders=new ArrayList<>();
-        folders.add(new Folder("Inbox"));
-        folders.add(new Folder("Sent"));
         contacts=new ArrayList<>();
         emailSender=EmailSender.getInstance();
     }

@@ -1,19 +1,22 @@
 package com.university.email.services.dao;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.university.email.model.credentials.Credential;
 import com.university.email.model.user.NullUser;
 import com.university.email.model.user.User;
 import com.university.email.model.user.UserInterface;
-import com.google.gson.Gson;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -52,18 +55,34 @@ public class DAO implements IDAO{
             System.out.println(e.getMessage());
         }
     }
+
     @Override
     public void loadDAO(){
-        try {
+            String path=System.getProperty("user.dir");
             ObjectMapper mapper=new ObjectMapper();
-            instance.setUsers(new ArrayList<UserInterface>(
-                    mapper.readValue(new File("DAO/users.json"),
-                    new TypeReference<ArrayList<User>>() {
-                    })));
+            JsonSchemaFactory schemaFactory=JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+        try {
+                InputStream jsonStream = new FileInputStream( path+"\\DAO\\users.json");
+                InputStream schemaStream = new FileInputStream(path+"\\DAO\\usersSchema.json");
+            JsonNode json = mapper.readTree(jsonStream);
+
+            JsonSchema schema = schemaFactory.getSchema(schemaStream);
+
+            Set<ValidationMessage> validationResult = schema.validate(json);
+            if (validationResult.isEmpty()) {
+                System.out.println( "There is no validation errors" );
+                this.setUsers(new ArrayList<UserInterface>(
+                        mapper.readValue(new File("DAO/users.json"),
+                                new TypeReference<ArrayList<User>>() {
+                                })));
+
+            } else {
+                validationResult.forEach(vm -> System.err.println(vm.getMessage()));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        catch(IOException e){
-            System.out.println(e.getMessage());
-        }
+
     }
 
     @Override
