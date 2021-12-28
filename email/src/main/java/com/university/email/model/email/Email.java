@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -17,6 +18,8 @@ public class Email implements Comparable<Email> {
     private String body;
     private Object attachment;
     private Integer priority;
+    private boolean readStatus;
+    private Date date;
 
     public Email(EmailBuilder builder){
         this.sender=builder.getSender();
@@ -25,6 +28,8 @@ public class Email implements Comparable<Email> {
         this.body=builder.getBody();
         this.attachment=builder.getAttachment();
         this.priority=Integer.valueOf(builder.getPriority());
+        this.readStatus=builder.isReadStatus();
+        this.date=builder.getDate();
     }
     public void print(){
         System.out.println("");

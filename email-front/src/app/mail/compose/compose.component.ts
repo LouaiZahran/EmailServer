@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/api/api.service';
+import { Globals } from 'src/app/globals/Globals';
+import { Email } from '../email';
 
 @Component({
   selector: 'app-compose',
@@ -7,7 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ComposeComponent implements OnInit {
 
-  constructor() { }
+  createEmail(receiver: string, subject:string, content:string){
+    let email = new Email(Globals.username, new Array<string>(receiver), subject, content, 1, true);
+    this.api.send("/sendEmail", email).subscribe(
+
+    );
+  }
+
+  constructor(private api: ApiService) {
+    
+  }
 
   ngOnInit(): void {
   }

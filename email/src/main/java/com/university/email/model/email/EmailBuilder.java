@@ -2,6 +2,7 @@ package com.university.email.model.email;
 
 import lombok.Getter;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -13,6 +14,9 @@ public class EmailBuilder{
     private String body;
     private Object attachment;
     private Integer priority;
+    private boolean readStatus;
+    private Date date;
+
     public EmailBuilder(String sender,Queue<String> receiver){
         this.sender=sender;
         this.receiver.addAll(receiver);
@@ -31,6 +35,15 @@ public class EmailBuilder{
     }
     public EmailBuilder priority(Integer priority){
         this.priority=Integer.valueOf(priority);
+        return this;
+    }
+    public EmailBuilder readStatus(boolean readStatus){
+        this.readStatus = readStatus;
+        return this;
+    }
+
+    public EmailBuilder date(Date date){
+        this.date = date;
         return this;
     }
 

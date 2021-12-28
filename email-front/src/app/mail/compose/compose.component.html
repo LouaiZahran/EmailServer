@@ -2,17 +2,17 @@
   <form>
     <div>
       <label for="to">To</label><br>
-      <input id="to" type="text" ngModel>
+      <input ngModel name = "to" #to = "ngModel" type="text">
     </div>
 
     <div>
       <label for="subject">Subject</label><br>
-      <input id = "subject" type="text" ngModel>
+      <input ngModel name = "subject" #subject = "ngModel" type="text">
     </div>
 
     <div>
       <label for="content">Content</label><br>
-      <textarea id="content" cols="30" rows="10" ngMmodel></textarea>
+      <textarea ngModel name = "content" #content = "ngModel" type="text" cols="30" rows="10"></textarea>
     </div>
 
     <div class="bottom">
@@ -22,8 +22,8 @@
         <option value="1">Medium</option>
         <option value="0">Low</option>
       </select>
-      <button class="send" routerLink="/inbox">Save to draft</button>
-      <button class="send" routerLink="/inbox">Send</button>
+      <button class="send">Save to draft</button>
+      <button class="send" (click) = "createEmail(to.value, subject.value, content.value)">Send</button>
     </div>
 
   </form>
