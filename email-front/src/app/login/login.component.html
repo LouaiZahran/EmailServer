@@ -8,10 +8,10 @@
 
         <div class="lower">
             <span class="icon"><i class="material-icons">person</i></span>
-            <input type="email" placeholder="Email"><br>
+            <input ngModel name="email" #email="ngModel" type="email" placeholder="Email"><br>
             <span class="icon"><i class="material-icons">lock</i></span>
-            <input type="password" placeholder="Password"><br>
-            <button routerLink="/mail/inbox">Login</button>
+            <input ngModel name="password" #password="ngModel" type="password" placeholder="Password"><br>
+            <button (click)="login(email.value, password.value)" routerLink="/mail/inbox">Login</button>
         </div>
     </div>
 </div>

@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ApiService } from 'src/app/api/api.service';
+import { Globals } from 'src/app/globals/Globals';
 import { Email } from '../email';
 
 @Component({
@@ -8,7 +10,7 @@ import { Email } from '../email';
 })
 export class InboxComponent implements OnInit{
   @ViewChild('myDisplay') myDisp!: ElementRef;
-  to!: string;
+  to!: Array<string>;
   subject!: string;
   from!:string;
   content!: string;
@@ -31,21 +33,30 @@ export class InboxComponent implements OnInit{
   selectAll: boolean = false;
   pageNumber: number = 1;
 
-  constructor() {}
+  constructor(private api: ApiService) {}
 
   ngOnInit(): void {
-    this.email = new Email('from', 'to', 'subject', 'body', 0);
-    //this.allEmails.push(this.email);
-    for (let index = 0; index < 25; index++) {
-      this.allEmails.push(new Email('from'+index, 'to', 'subject', 'from'+index, 0));
+    this.api.getEmails(Globals.username, "Inbox").subscribe(
+      (mailList: Array<Email>) => {
+        mailList.forEach(
+          (email: Email) => {
+            this.allEmails.push(Email.createEmailFromObject(email));
+            console.log(typeof (Email.createEmailFromObject(email)));
+          }
+        )
+      },
+    () => {},
+    () => {
+      this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
     }
-    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+    )
+
   }
 
   on(index : number) {
     this.myDisp.nativeElement.style.display = 'block';
-    this.to = this.emails[index].getTo();
-    this.from = this.emails[index].getFrom();
+    this.from = this.emails[index].getSender();
+    this.to = this.emails[index].getReceiver();
     this.subject = this.emails[index].getSubject();
     this.content = this.emails[index].getBody();
     this.date = this.emails[index].getDate();

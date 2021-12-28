@@ -23,6 +23,8 @@ public class User implements UserInterface {
         folders = new ArrayList<>();
         folders.add(new Folder("Inbox"));
         folders.add(new Folder("Sent"));
+        folders.add(new Folder("Trash"));
+        folders.add(new Folder("Draft"));
         contacts = new ArrayList<>();
         emailSender = EmailSender.getInstance();
     }

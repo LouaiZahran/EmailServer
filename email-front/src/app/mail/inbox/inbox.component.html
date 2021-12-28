@@ -16,63 +16,63 @@
   <span>{{1 + (pageNumber - 1) * 10}}―{{allEmails.length - (pageNumber - 1) * 10 > 10 ? pageNumber * 10 : allEmails.length}} of {{allEmails.length}}</span>
 </div>
 <div id="container">
-  <div class="row{{emails[0].read ? '' : ' unread'}}" (click)="on(0)" *ngIf="emails.length > 0">
+  <div class="row{{emails[0].getReadStatus() ? '' : ' unread'}}" (click)="on(0)" *ngIf="emails.length > 0">
     <input type="checkbox" [(ngModel)]="checkboxes[0].checked" [value]="checkboxes[0].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[0].getFrom()}}</span>
+    <span class="from">{{emails[0].getSender()}}</span>
     <span class="subject">{{emails[0].getSubject()}}</span>
     <span class="date">{{emails[0].getDate()}}</span>
   </div>
-  <div class="row{{emails[1].read ? '' : ' unread'}}" (click)="on(1)" *ngIf="emails.length > 1">
+  <div class="row{{emails[1].getReadStatus() ? '' : ' unread'}}" (click)="on(1)" *ngIf="emails.length > 1">
     <input type="checkbox" [(ngModel)]="checkboxes[1].checked" [value]="checkboxes[1].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[1].getFrom()}}</span>
+    <span class="from">{{emails[1].getSender()}}</span>
     <span class="subject">{{emails[1].getSubject()}}</span>
     <span class="date">{{emails[1].getDate()}}</span>
   </div>
-  <div class="row{{emails[2].read ? '' : ' unread'}}" (click)="on(2)" *ngIf="emails.length > 2">
+  <div class="row{{emails[2].getReadStatus() ? '' : ' unread'}}" (click)="on(2)" *ngIf="emails.length > 2">
     <input type="checkbox" [(ngModel)]="checkboxes[2].checked" [value]="checkboxes[2].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[2].getFrom()}}</span>
+    <span class="from">{{emails[2].getSender()}}</span>
     <span class="subject">{{emails[2].getSubject()}}</span>
     <span class="date">{{emails[2].getDate()}}</span>
   </div>
-  <div class="row{{emails[3].read ? '' : ' unread'}}" (click)="on(3)" *ngIf="emails.length > 3">
+  <div class="row{{emails[3].getReadStatus() ? '' : ' unread'}}" (click)="on(3)" *ngIf="emails.length > 3">
     <input type="checkbox" [(ngModel)]="checkboxes[3].checked" [value]="checkboxes[3].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[3].getFrom()}}</span>
+    <span class="from">{{emails[3].getSender()}}</span>
     <span class="subject">{{emails[3].getSubject()}}</span>
     <span class="date">{{emails[3].getDate()}}</span>
   </div>
-  <div class="row{{emails[4].read ? '' : ' unread'}}" (click)="on(4)" *ngIf="emails.length > 4">
+  <div class="row{{emails[4].getReadStatus() ? '' : ' unread'}}" (click)="on(4)" *ngIf="emails.length > 4">
     <input type="checkbox" [(ngModel)]="checkboxes[4].checked" [value]="checkboxes[4].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[4].getFrom()}}</span>
+    <span class="from">{{emails[4].getSender()}}</span>
     <span class="subject">{{emails[4].getSubject()}}</span>
     <span class="date">{{emails[4].getDate()}}</span>
   </div>
-  <div class="row{{emails[5].read ? '' : ' unread'}}" (click)="on(5)" *ngIf="emails.length > 5">
+  <div class="row{{emails[5].getReadStatus() ? '' : ' unread'}}" (click)="on(5)" *ngIf="emails.length > 5">
     <input type="checkbox" [(ngModel)]="checkboxes[5].checked" [value]="checkboxes[5].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[5].getFrom()}}</span>
+    <span class="from">{{emails[5].getSender()}}</span>
     <span class="subject">{{emails[5].getSubject()}}</span>
     <span class="date">{{emails[5].getDate()}}</span>
   </div>
-  <div class="row{{emails[6].read ? '' : ' unread'}}" (click)="on(6)" *ngIf="emails.length > 6">
+  <div class="row{{emails[6].getReadStatus() ? '' : ' unread'}}" (click)="on(6)" *ngIf="emails.length > 6">
     <input type="checkbox" [(ngModel)]="checkboxes[6].checked" [value]="checkboxes[6].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[6].getFrom()}}</span>
+    <span class="from">{{emails[6].getSender()}}</span>
     <span class="subject">{{emails[6].getSubject()}}</span>
     <span class="date">{{emails[6].getDate()}}</span>
   </div>
-  <div class="row{{emails[7].read ? '' : ' unread'}}" (click)="on(7)" *ngIf="emails.length > 7">
+  <div class="row{{emails[7].getReadStatus() ? '' : ' unread'}}" (click)="on(7)" *ngIf="emails.length > 7">
     <input type="checkbox" [(ngModel)]="checkboxes[7].checked" [value]="checkboxes[7].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[7].getFrom()}}</span>
+    <span class="from">{{emails[7].getSender()}}</span>
     <span class="subject">{{emails[7].getSubject()}}</span>
     <span class="date">{{emails[7].getDate()}}</span>
   </div>
-  <div class="row{{emails[8].read ? '' : ' unread'}}" (click)="on(8)" *ngIf="emails.length > 8">
+  <div class="row{{emails[8].getReadStatus() ? '' : ' unread'}}" (click)="on(8)" *ngIf="emails.length > 8">
     <input type="checkbox" [(ngModel)]="checkboxes[8].checked" [value]="checkboxes[8].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[8].getFrom()}}</span>
+    <span class="from">{{emails[8].getSender()}}</span>
     <span class="subject">{{emails[8].getSubject()}}</span>
     <span class="date">{{emails[8].getDate()}}</span>
   </div>
-  <div class="row{{emails[9].read ? '' : ' unread'}}" (click)="on(9)" *ngIf="emails.length > 9">
+  <div class="row{{emails[9].getReadStatus() ? '' : ' unread'}}" (click)="on(9)" *ngIf="emails.length > 9">
     <input type="checkbox" [(ngModel)]="checkboxes[9].checked" [value]="checkboxes[9].value" (click)="$event.stopPropagation()"/>
-    <span class="from">{{emails[9].getFrom()}}</span>
+    <span class="from">{{emails[9].getSender()}}</span>
     <span class="subject">{{emails[9].getSubject()}}</span>
     <span class="date">{{emails[9].getDate()}}</span>
   </div>
