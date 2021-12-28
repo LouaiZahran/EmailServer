@@ -15,7 +15,6 @@ import com.networknt.schema.ValidationMessage;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Set;
 
 import lombok.Getter;
@@ -75,7 +74,6 @@ public class DAO implements IDAO{
                         mapper.readValue(new File("DAO/users.json"),
                                 new TypeReference<ArrayList<User>>() {
                                 })));
-
             } else {
                 validationResult.forEach(vm -> System.err.println(vm.getMessage()));
             }

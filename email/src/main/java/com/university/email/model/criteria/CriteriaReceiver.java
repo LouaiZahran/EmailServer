@@ -13,8 +13,11 @@ public class CriteriaReceiver implements Criteria{
     public ArrayList<Email> meetCriteria(ArrayList<Email> emails) {
         ArrayList<Email> ret = new ArrayList<>();
         for(Email email: emails){
-            if(email.getReceiver().equals(receiver))
-                ret.add(email);
+            ArrayList<String> receiversArr=new ArrayList<>(email.getReceiver());
+            for(String emailReceiver :receiversArr) {
+                if (emailReceiver.equals(receiver))
+                    ret.add(email);
+            }
         }
         return ret;
     }

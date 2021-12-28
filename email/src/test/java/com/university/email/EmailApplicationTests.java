@@ -1,9 +1,7 @@
 package com.university.email;
 
 import com.university.email.model.credentials.Credential;
-import com.university.email.model.criteria.Criteria;
-import com.university.email.model.criteria.CriteriaBody;
-import com.university.email.model.criteria.CriteriaPriority;
+import com.university.email.model.criteria.*;
 import com.university.email.model.email.Email;
 import com.university.email.model.email.EmailBuilder;
 import com.university.email.model.folder.Folder;
@@ -11,6 +9,7 @@ import com.university.email.model.user.User;
 import com.university.email.model.user.UserInterface;
 import com.university.email.services.dao.DAO;
 import com.university.email.services.dao.IDAO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +23,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class EmailApplicationTests {
 	private final IDAO dao = DAO.getInstance();
+	@BeforeEach
+	public void setup(){
+		System.out.println("Clearing db");
+		dao.setUsers(new ArrayList<>());
+	}
+
 	@Test
 	void LoadTest(){
 		dao.loadDAO();
@@ -103,20 +108,49 @@ class EmailApplicationTests {
 
 		Queue<String> receivers=new LinkedList<>();
 		receivers.add("Bahaa");
-		Email exceptedEmail=new EmailBuilder("Louai",receivers).subject("hello Subject 2")
+		Email email1=new EmailBuilder("Louai",receivers).subject("hello Subject 2")
 				.body("Hello Filter").priority(2).build();
 
 		UserInterface Louai = dao.findUserByUsername("Louai");
 		UserInterface Bahaa = dao.findUserByUsername("Bahaa");
-		Louai.sendEmail(exceptedEmail);
+		Louai.sendEmail(email1);
 
-		Louai.getFolder("Sent").print();
+		EmailBuilder emailBuilder=new EmailBuilder("Louai",receivers).
+				subject("hello subject").body("hello body").priority(1);
+		Email email2 = new Email(emailBuilder);
+		Louai.sendEmail(email2);
+		//priority
 		Criteria criteria = new CriteriaPriority(2);
-		Bahaa.getFolder("Inbox").print();
 		ArrayList<Email> filtered = Bahaa.getFolder("Inbox").search(criteria);
+		assertEquals(filtered.size(),1,"Priority Filter Test Failed ");
 		for(Email filteredEmail: filtered) {
-			filteredEmail.print();
-			assertEquals(filteredEmail,exceptedEmail,"Filter Test Failed");
+			assertEquals(filteredEmail.getPriority(),2,"Priority Filter Test Failed ");
+		}
+		//body criteria
+		criteria = new CriteriaBody("hello body");
+		filtered = Bahaa.getFolder("Inbox").search(criteria);
+		assertEquals(filtered.size(),1,"Body Filter Test Failed ");
+		for(Email filteredEmail: filtered) {
+			assertEquals(filteredEmail.getBody(),"hello body","Body Filter Test Failed ");
+		}
+		//And criteria with subject and sender
+		criteria = new CriteriaSubject("hello subject");
+		Criteria criteria2=new CriteriaSender("Louai");
+		Criteria andCriteria=new AndCriteria(criteria,criteria2);
+		filtered = Bahaa.getFolder("Inbox").search(andCriteria);
+		assertEquals(filtered.size(),1,"And Filter Test Failed");
+		for(Email filteredEmail: filtered) {
+			assertEquals(filteredEmail.getSender(),"Louai","And Filter Test Failed");
+			assertEquals(filteredEmail.getSubject(),"hello subject","And Filter Test Failed");
+		}
+		//OR criteria
+		criteria = new CriteriaSubject("not a real subject");
+		criteria2=new CriteriaReceiver("Bahaa");
+		Criteria or=new OrCriteria(criteria,criteria2);
+		filtered = Bahaa.getFolder("Inbox").search(or);
+		assertEquals(filtered.size(),2,"OR Filter Test Failed");
+		for(Email filteredEmail: filtered) {
+			assertEquals(filteredEmail.getReceiver().peek(),"Bahaa"," OR Filter Test Failed");
 		}
 	}
 	@Test
@@ -152,7 +186,6 @@ class EmailApplicationTests {
 			filteredEmail.print();
 		}
 		dao.saveDAO();
-
 	}
 
 }
