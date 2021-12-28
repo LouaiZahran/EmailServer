@@ -7,10 +7,10 @@
         </div>
         <div class="lower">
             <span class="icon"><i class="material-icons">person</i></span>
-            <input type="email" placeholder="Email"><br>
+            <input ngModel name="email" #email="ngModel" type="email" placeholder="Email"><br>
             <span class="icon"><i class="material-icons">lock</i></span>
-            <input type="password" placeholder="Password"><br>
-            <button routerLink="/mail/inbox">Register</button>
+            <input ngModel name="password" #password="ngModel" type="password" placeholder="Password"><br>
+            <button (click)="register(email.value, password.value)">Register</button>
         </div>
     </div>
 </div>

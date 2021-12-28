@@ -3,7 +3,15 @@
   <header>
     <button class="search"> <i class="material-icons">search</i> </button>
     <input type="text" class="search" placeholder = "Search...">
-    <button class="filter"> <i class="material-icons">filter_list</i> </button>
+    <button class="filter" (click)="toggle()"> <i class="material-icons">filter_list</i> </button>
+    <div class="filterAdvanced" #filter>
+      <input type="checkbox" id="to">
+      <label for="to">To</label>
+      <input type="checkbox" id="from">
+      <label for="subject">From</label>
+      <input type="checkbox" id="subject">
+      <label for="subject">Subject</label>
+    </div>
   </header>
   <section><router-outlet></router-outlet></section>
   <aside>

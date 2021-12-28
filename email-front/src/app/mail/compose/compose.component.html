@@ -22,7 +22,7 @@
         <option value="1">Medium</option>
         <option value="0">Low</option>
       </select>
-      <button class="send">Save to draft</button>
+      <button class="send" (click) = "saveDraft(to.value, subject.value, content.value)">Save to draft</button>
       <button class="send" (click) = "createEmail(to.value, subject.value, content.value)">Send</button>
     </div>
 

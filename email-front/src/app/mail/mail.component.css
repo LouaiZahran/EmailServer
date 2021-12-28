@@ -10,7 +10,7 @@
       "nav nav header header header header header header header header"
       "nav nav sec sec sec sec sec sec sec sec";
   }
-  
+
   header {
     background-color: white;
     grid-area: header;
@@ -25,14 +25,14 @@
     grid-area: sec;
     padding: 5px;
   }
-  
+
   aside {
     background-color: #1d2127;
     color: white;
     grid-area: nav;
     padding: 5px;
   }
-  
+
   aside button {
     width: 90%;
     height: 55px;
@@ -42,13 +42,14 @@
     cursor: pointer;
     border: none;
   }
+
   aside button:hover {
     background-color: #282d36;
   }
   aside button.active {
     border: 5px solid rgba(124, 252, 0, 0.8);
   }
-  
+
   a {
     color: #abb0b8;
     text-decoration: none;
@@ -58,7 +59,7 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   div.logo {
     font-weight: bold;
     font-size: 26px;
@@ -85,7 +86,7 @@
       transform: rotate(360deg);
     }
   }
-  
+
   input.search {
     width: 70%;
     height: 80%;
@@ -119,4 +120,13 @@
     border-radius: 50%;
     cursor: pointer;
   }
-  
+
+  .filterAdvanced{
+    position: absolute;
+    top: 50px;
+    right: 110px;
+    background-color: #eee;
+    display: none;
+    border-radius: 10px;
+    color: #95979b;
+  }

@@ -12,9 +12,12 @@ export class ComposeComponent implements OnInit {
 
   createEmail(receiver: string, subject:string, content:string){
     let email = new Email(Globals.username, new Array<string>(receiver), subject, content, 1, true);
-    this.api.send("/sendEmail", email).subscribe(
+    this.api.send("/sendEmail", email).subscribe();
+  }
 
-    );
+  saveDraft(receiver: string, subject:string, content:string){
+    let email = new Email(Globals.username, new Array<string>(receiver), subject, content, 1, true);
+    this.api.send("/saveDraft", email).subscribe();
   }
 
   constructor(private api: ApiService) {

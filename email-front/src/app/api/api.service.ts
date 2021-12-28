@@ -37,4 +37,8 @@ export class ApiService {
   get(path: string): Observable<Array<Email>> {
     return this.http.get<Array<Email>>(`${environment.api_url}${path}`, httpOptions);
   }
+
+  deleteEmail(email: Email): Observable<any>{
+    return this.http.post<any>(`${environment.api_url}/deleteEmail`, JSON.stringify(email), httpOptions);
+  }
 }

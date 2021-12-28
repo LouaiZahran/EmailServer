@@ -7,24 +7,22 @@ export class Email {
   private readStatus: boolean;
   private priority: number;
 
-  constructor(sender: string, receiver: Array<string>, subject: string, body: string, priority: number, readStatus: boolean) {
+  constructor(sender: string, receiver: Array<string>, subject: string, body: string, priority: number, draft: boolean) {
     this.sender = sender;
     this.receiver = receiver;
     this.subject = subject;
     this.body = body;
     this.date = new Date();
-    this.readStatus = readStatus;
+    this.readStatus = false;
     this.priority = priority;
   }
-
   static createEmailFromObject(obj: any){
     return new Email(obj.sender, obj.receiver, obj.subject, obj.body, obj.priority, obj.readStatus);
   }
-
-  getSender(){
+  getFrom(){
     return this.sender;
   }
-  getReceiver(){
+  getTo(){
     return this.receiver;
   }
   getSubject(){
@@ -39,7 +37,10 @@ export class Email {
   getPriority(){
     return this.priority;
   }
-  getReadStatus(){
+  getRead(){
     return this.readStatus;
+  }
+  toggleRead(){
+    this.readStatus = !this.readStatus;
   }
 }

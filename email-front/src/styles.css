@@ -3,10 +3,10 @@ body {
   margin: 0px;
   padding: 0px;
 }
-div:empty{
+div#container:empty{
   position: relative;
 }
-div:empty::before{
+div#container:empty::before{
   position: absolute;
   content: "Empty";
   top: 50%;
