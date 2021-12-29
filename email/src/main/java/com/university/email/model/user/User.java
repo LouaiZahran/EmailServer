@@ -49,7 +49,7 @@ public class User implements UserInterface {
     @Override
     public Folder getFolder(String name){
         for(Folder folder: folders)
-            if(folder.getName().equals(name))
+            if(folder.getName().equalsIgnoreCase(name))
                 return folder;
         return null;
     }
@@ -74,11 +74,21 @@ public class User implements UserInterface {
         folders.removeIf(folder -> folder.getName().equals(name));
     }
     @Override
+    public ArrayList<Contact> findContact(String name){
+        ArrayList<Contact> ret=new ArrayList<>();
+        for(Contact contact: contacts){
+            if(contact.getName().indexOf(name)!=-1){
+                ret.add(contact);
+            }
+        }
+        return ret;
+    }
+    @Override
     public void addContact(Contact contact){
         contacts.add(contact);
     }
     @Override
-    public void removeContact(Contact contact){
-        contacts.remove(contact);
+    public void removeContact(int index){
+        contacts.remove(index);
     }
 }

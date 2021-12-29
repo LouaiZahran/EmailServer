@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.university.email.model.credentials.Credential;
+import com.university.email.model.email.Email;
+import com.university.email.model.folder.Folder;
 import com.university.email.model.user.NullUser;
 import com.university.email.model.user.User;
 import com.university.email.model.user.UserInterface;
@@ -15,7 +17,6 @@ import com.networknt.schema.ValidationMessage;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Set;
 
 import lombok.Getter;
@@ -31,6 +32,22 @@ public class DAO implements IDAO{
     public static DAO getInstance() {
         return instance;
     }
+    @Override
+    public void deleteEmail(String username,String folderName,int index){
+        UserInterface user=this.findUserByUsername(username);
+        Folder folder=user.getFolder(folderName);
+        folder.removeEmail(index);
+    }
+    @Override
+    public void moveEmail(String username,String oldFolderName,String newFolderName,int index){
+        UserInterface user=this.findUserByUsername(username);
+        Folder oFolder=user.getFolder(oldFolderName);
+        Email email=oFolder.getContent().get(index);
+        oFolder.removeEmail(index);
+        Folder nFolder=user.getFolder(newFolderName);
+        nFolder.addEmail(email);
+    }
+
     @Override
     public ArrayList<UserInterface> getUsers() {
         return users;
@@ -58,12 +75,12 @@ public class DAO implements IDAO{
 
     @Override
     public void loadDAO(){
-            String path=System.getProperty("user.dir");
-            ObjectMapper mapper=new ObjectMapper();
-            JsonSchemaFactory schemaFactory=JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+        String path=System.getProperty("user.dir");
+        ObjectMapper mapper=new ObjectMapper();
+        JsonSchemaFactory schemaFactory=JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         try {
-                InputStream jsonStream = new FileInputStream( path+"\\DAO\\users.json");
-                InputStream schemaStream = new FileInputStream(path+"\\DAO\\usersSchema.json");
+            InputStream jsonStream = new FileInputStream( path+"\\DAO\\users.json");
+            InputStream schemaStream = new FileInputStream(path+"\\DAO\\usersSchema.json");
             JsonNode json = mapper.readTree(jsonStream);
 
             JsonSchema schema = schemaFactory.getSchema(schemaStream);
@@ -75,7 +92,6 @@ public class DAO implements IDAO{
                         mapper.readValue(new File("DAO/users.json"),
                                 new TypeReference<ArrayList<User>>() {
                                 })));
-
             } else {
                 validationResult.forEach(vm -> System.err.println(vm.getMessage()));
             }

@@ -16,12 +16,12 @@ label{
   color: #282d36;
   margin-left: 15px;
 }
-input{
+input.subject, input.to{
   text-align: left;
   border: none;
   border-bottom: 2px solid #d4d5d8;
 }
-input:focus{
+input.subject:focus,input.to:focus{
   outline: none;
   border-bottom: 2px solid #282d36;
 }
@@ -37,7 +37,7 @@ textarea:focus{
   outline: none;
   border: 2px solid #282d36;
 }
-.send{
+.send, .upload{
   color:#d4d5d8;
   font-weight: bold;
   background-color: #1D2127;
@@ -46,7 +46,7 @@ textarea:focus{
   cursor: pointer;
   font-size: 20px;
 }
-.send:hover {
+.send:hover, .upload{
   background-color: #282d36;
 }
 select{
@@ -62,7 +62,11 @@ select:hover{
 }
 div.bottom{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
   grid-gap: 10%;
   margin: 0 5%;
 }
+.file{
+  margin-bottom: 15px;
+}
+

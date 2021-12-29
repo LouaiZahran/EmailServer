@@ -8,6 +8,8 @@ import { SentComponent } from './mail/sent/sent.component';
 import { TrashComponent } from './mail/trash/trash.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ContactsComponent } from './mail/contacts/contacts.component';
+import { AddContactComponent } from './mail/add-contact/add-contact.component';
 import { MailComponent } from './mail/mail.component';
 
 const routes: Routes = [
@@ -20,7 +22,9 @@ const routes: Routes = [
     {path: 'trash', component: TrashComponent},
     {path: 'sent', component: SentComponent},
     {path: 'draft', component: DraftComponent},
-    {path: 'folders', component: FoldersComponent}
+    {path: 'folders', component: FoldersComponent},
+    {path: 'addContact', component: AddContactComponent},
+    {path: 'contacts', component: ContactsComponent}
   ]},
   {path: '', redirectTo:'/login', pathMatch:'full'}
 ];
@@ -31,4 +35,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 export const routingComponents =
- [ComposeComponent, InboxComponent, TrashComponent, SentComponent, DraftComponent, FoldersComponent, LoginComponent, RegisterComponent, MailComponent];
+ [ComposeComponent, InboxComponent, TrashComponent, SentComponent, DraftComponent, FoldersComponent, LoginComponent, RegisterComponent,AddContactComponent,ContactsComponent ,MailComponent];

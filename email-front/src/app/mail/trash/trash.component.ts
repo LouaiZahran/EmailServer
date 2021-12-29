@@ -42,6 +42,7 @@ export class TrashComponent implements OnInit {
   load(){
     this.api.getEmails(Globals.username, "Trash").subscribe(
       (mailList: Array<Email>) => {
+        this.allEmails=[];
         mailList.forEach(
           (email: Email) => {
             this.allEmails.push(Email.createEmailFromObject(email));
@@ -50,9 +51,35 @@ export class TrashComponent implements OnInit {
       },
     () => {},
     () => {
+      this.allEmails.reverse();
       this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+      for (let i=0;i<10;i++){
+        this.checkboxes[i].checked=false;
+      }
     }
     )
+  }
+
+  sortEmails(){
+    this.api.sortEmails(Globals.username, "Inbox").subscribe(
+      (mailList: Array<Email>) => {
+        this.allEmails = [];
+        mailList.forEach(
+          (email: Email) => {
+            this.allEmails.push(Email.createEmailFromObject(email));
+          }
+        )
+      },
+    () => {},
+    () => {
+      this.allEmails.reverse();
+      this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+      for (let i=0;i<10;i++){
+        this.checkboxes[i].checked=false;
+      }
+    }
+    )
+
   }
 
   on(index : number) {
@@ -82,6 +109,23 @@ export class TrashComponent implements OnInit {
     this.pageNumber -= 1;
     this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
   }
+  deleteEmails(){
+    for(let i = 0; i<10; i++){
+      if(!this.checkboxes[i].checked)
+        continue;
+      this.api.deleteEmail(this.allEmails.length-((this.pageNumber-1)*10+i)-1,"Trash").subscribe();
+    }
 
+    this.load();
+  }
+  restore(){
+    for(let i = 0; i<10; i++){
+      if(!this.checkboxes[i].checked)
+        continue;
+        this.api.moveEmail((this.allEmails.length-((this.pageNumber-1)*10+i)-1),"Trash","Inbox").subscribe();
+    }
+
+    this.load();
+  }
 
 }

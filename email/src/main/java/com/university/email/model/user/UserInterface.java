@@ -19,5 +19,6 @@ public interface UserInterface {
     void addFolder(String name);
     void removeFolder(String name);
     void addContact(Contact contact);
-    void removeContact(Contact contact);
+    void removeContact(int index);
+    ArrayList<Contact> findContact(String name);
 }

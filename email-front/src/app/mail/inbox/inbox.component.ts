@@ -1,7 +1,10 @@
+
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';
 import { Email } from '../email';
+import { FoldersComponent } from '../folders/folders.component';
+
 
 @Component({
   selector: 'app-inbox',
@@ -32,13 +35,15 @@ export class InboxComponent implements OnInit{
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
-  
+  prioSort: boolean = true;
   constructor(private api: ApiService) {}
 
+  static searchString:string;
+  static filters:Array<string>;
+  
   ngOnInit(): void {
     this.load();
   }
-
   load(){
     this.api.getEmails(Globals.username, "Inbox").subscribe(
       (mailList: Array<Email>) => {
@@ -51,12 +56,63 @@ export class InboxComponent implements OnInit{
       },
     () => {},
     () => {
+      this.allEmails.reverse();
       this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+      for (let i=0;i<10;i++){
+        this.checkboxes[i].checked=false;
+      }
     }
     )
   }
+ 
+ search(searchString:string,filter:Array<string>){
+    this.api.filterEmails(Globals.username, "Inbox",filter,searchString).subscribe(
+      (mailList: Array<Email>) => {
+        this.allEmails = [];
+        mailList.forEach(
+          (email: Email) => {
+            this.allEmails.push(Email.createEmailFromObject(email));
+          }
+        )
+      },
+    () => {},
+    () => {
+      this.allEmails.reverse();
+      this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+      for (let i=0;i<10;i++){
+        this.checkboxes[i].checked=false;
+      }
+    }
+    )
+  }
+  sortEmails(){
+    this.prioSort=!this.prioSort;
+    if(this.prioSort){
+      this.load();
+      return;
+    }
+    this.api.sortEmails(Globals.username, "Inbox").subscribe(
+      (mailList: Array<Email>) => {
+        this.allEmails = [];
+        mailList.forEach(
+          (email: Email) => {
+            this.allEmails.push(Email.createEmailFromObject(email));
+          }
+        )
+      },
+    () => {},
+    () => {
+      this.allEmails.reverse();
+      this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+      for (let i=0;i<10;i++){
+        this.checkboxes[i].checked=false;
+      }
+    }
+    )
 
-  markAsRead(){
+  }
+
+  markAsRead(){/*
     for(let i = 0; i<10; i++){
       if(!this.checkboxes[i].checked)
         continue;
@@ -65,19 +121,20 @@ export class InboxComponent implements OnInit{
         this.emails[i].toggleRead();
       this.api.send("/sendEmail", this.emails[i]).subscribe();
     }
-    this.load();
+    this.load();*/
   }
 
   deleteEmails(){
     for(let i = 0; i<10; i++){
       if(!this.checkboxes[i].checked)
         continue;
-      this.api.deleteEmail(this.emails[i]).subscribe();
+        this.api.moveEmail((this.allEmails.length-((this.pageNumber-1)*10+i)-1),"Inbox","Trash").subscribe();
     }
+
     this.load();
   }
 
-  markAsUnread(){
+  markAsUnread(){/*
     for(let i = 0; i<10; i++){
       if(!this.checkboxes[i].checked)
         continue;
@@ -87,7 +144,7 @@ export class InboxComponent implements OnInit{
       this.api.send("/sendEmail", this.emails[i]).subscribe();
     }
     this.emails = []
-    this.load();
+    this.load();*/
   }
 
   on(index : number) {
@@ -118,6 +175,15 @@ export class InboxComponent implements OnInit{
   prev(){
     this.pageNumber -= 1;
     this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+  }
+  addToFolder(){
+    FoldersComponent.paste = true;
+    FoldersComponent.emails = [];
+    this.checkboxes.forEach(checkbox => {
+      if(checkbox.checked){
+        FoldersComponent.emails.push(this.emails[checkbox.value])
+      }
+    });
   }
 }
 

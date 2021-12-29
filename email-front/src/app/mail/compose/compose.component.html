@@ -2,12 +2,12 @@
   <form>
     <div>
       <label for="to">To</label><br>
-      <input ngModel name = "to" #to = "ngModel" type="text">
+      <input ngModel name = "to" #to = "ngModel" type="text" class="to">
     </div>
 
     <div>
       <label for="subject">Subject</label><br>
-      <input ngModel name = "subject" #subject = "ngModel" type="text">
+      <input ngModel name = "subject" #subject = "ngModel" type="text" class="subject">
     </div>
 
     <div>
@@ -16,11 +16,15 @@
     </div>
 
     <div class="bottom">
-      <select name="priority">
-        <option value="3">Very High</option>
-        <option value="2">High</option>
-        <option value="1">Medium</option>
-        <option value="0">Low</option>
+      <div class="attah">
+        <input type="file" class="file[]" (change)= "attach($event)"  multiple="multiple">
+        <button class="upload" (click) = "upload()">Upload</button>
+      </div>
+      <select name="priority" id="priority">
+        <option value="4">Very High</option>
+        <option value="3">High</option>
+        <option value="2">Medium</option>
+        <option value="1">Low</option>
       </select>
       <button class="send" (click) = "saveDraft(to.value, subject.value, content.value)">Save to draft</button>
       <button class="send" (click) = "createEmail(to.value, subject.value, content.value)">Send</button>
