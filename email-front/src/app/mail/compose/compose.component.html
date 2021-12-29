@@ -16,7 +16,10 @@
     </div>
 
     <div class="bottom">
-      <input type="file" class="attach" id="attach" #myAttach>
+      <div class="attah">
+        <input type="file" class="file" (change)= "attach($event)">
+        <button class="upload" (click) = "upload()">Upload</button>
+      </div>
       <select name="priority" id="priority">
         <option value="3">Very High</option>
         <option value="2">High</option>

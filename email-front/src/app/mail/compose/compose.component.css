@@ -37,7 +37,7 @@ textarea:focus{
   outline: none;
   border: 2px solid #282d36;
 }
-.send{
+.send, .upload{
   color:#d4d5d8;
   font-weight: bold;
   background-color: #1D2127;
@@ -46,7 +46,7 @@ textarea:focus{
   cursor: pointer;
   font-size: 20px;
 }
-.send:hover {
+.send:hover, .upload{
   background-color: #282d36;
 }
 select{
@@ -66,5 +66,7 @@ div.bottom{
   grid-gap: 10%;
   margin: 0 5%;
 }
-
+.file{
+  margin-bottom: 15px;
+}
 

@@ -1,8 +1,11 @@
+
+import { MailComponent } from './../mail.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';
 import { Email } from '../email';
 import { FoldersComponent } from '../folders/folders.component';
+
 
 @Component({
   selector: 'app-inbox',
@@ -34,12 +37,12 @@ export class InboxComponent implements OnInit{
   selectAll: boolean = false;
   pageNumber: number = 1;
   prioSort: boolean = false;
+
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
     this.load();
   }
-
   load(){
     this.api.getEmails(Globals.username, "Inbox").subscribe(
       (mailList: Array<Email>) => {
