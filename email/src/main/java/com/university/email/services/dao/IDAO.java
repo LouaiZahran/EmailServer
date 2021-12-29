@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public interface IDAO {
     ArrayList<UserInterface> getUsers();
     void setUsers(ArrayList<UserInterface> users);
+    void deleteEmail(String username,String folderName,int index);
     void saveDAO();
     void loadDAO();
     UserInterface findUserByCredentials(Credential credential);

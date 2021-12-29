@@ -23,8 +23,8 @@ public class Folder {
         content.add(email);
     }
 
-    public void removeEmail(Email email){
-        content.remove(email);
+    public void removeEmail(int index){
+        content.remove(index);
     }
 
     public ArrayList<Email> search(Criteria criteria){
