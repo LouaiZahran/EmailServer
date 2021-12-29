@@ -1,3 +1,4 @@
+import { ComposeComponent } from './../compose/compose.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';
@@ -142,6 +143,7 @@ deleteEmails(){
     this.subject = this.emails[index].getSubject();
     this.content = this.emails[index].getBody();
     this.date = this.emails[index].getDate();
+
   }
   off(){
     this.myDisp.nativeElement.style.display = 'none';
@@ -174,5 +176,10 @@ deleteEmails(){
     }
   }
 
-
+  edit(){
+    ComposeComponent.draftTo = this.to;
+    ComposeComponent.draftSubject = this.subject;
+    ComposeComponent.draftContent = this.content;
+    ComposeComponent.draftEdit = true;
+  }
 }
