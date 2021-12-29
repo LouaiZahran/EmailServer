@@ -13,6 +13,7 @@ export class MailComponent implements OnInit {
   @ViewChild('filter') myFilter!: ElementRef;
   toggle(){
     this.filterAdvanced = !this.filterAdvanced;
+    alert(this.filterFrom);
     if(this.filterAdvanced){
       this.myFilter.nativeElement.style.display = 'block';
     }
@@ -20,4 +21,9 @@ export class MailComponent implements OnInit {
       this.myFilter.nativeElement.style.display = 'none';
     }
   }
+  searchString: string = '';
+  filterTo:boolean = false;
+  filterFrom:boolean = false;
+  filterBody:boolean = false;
+  filterSubject:boolean = false;
 }

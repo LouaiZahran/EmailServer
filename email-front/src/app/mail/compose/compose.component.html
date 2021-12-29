@@ -2,12 +2,12 @@
   <form>
     <div>
       <label for="to">To</label><br>
-      <input ngModel name = "to" #to = "ngModel" type="text">
+      <input ngModel name = "to" #to = "ngModel" type="text" class="to">
     </div>
 
     <div>
       <label for="subject">Subject</label><br>
-      <input ngModel name = "subject" #subject = "ngModel" type="text">
+      <input ngModel name = "subject" #subject = "ngModel" type="text" class="subject">
     </div>
 
     <div>
@@ -16,6 +16,7 @@
     </div>
 
     <div class="bottom">
+      <input type="file" class="attach" id="attach" #myAttach>
       <select name="priority" id="priority">
         <option value="3">Very High</option>
         <option value="2">High</option>

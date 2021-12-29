@@ -33,7 +33,7 @@ export class InboxComponent implements OnInit{
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
-  
+  prioSort: boolean = false;
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
