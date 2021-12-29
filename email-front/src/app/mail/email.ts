@@ -6,8 +6,9 @@ export class Email {
   private date: Date;
   private readStatus: boolean;
   private priority: number;
+  private attachment:FormData;
 
-  constructor(sender: string, receiver: Array<string>, subject: string, body: string, priority: number, draft: boolean) {
+  constructor(sender: string, receiver: Array<string>, subject: string, body: string, priority: number, draft: boolean,attachment:FormData) {
     this.sender = sender;
     this.receiver = receiver;
     this.subject = subject;
@@ -15,9 +16,10 @@ export class Email {
     this.date = new Date();
     this.readStatus = false;
     this.priority = priority;
+    this.attachment=attachment;
   }
   static createEmailFromObject(obj: any){
-    return new Email(obj.sender, obj.receiver, obj.subject, obj.body, obj.priority, obj.readStatus);
+    return new Email(obj.sender, obj.receiver, obj.subject, obj.body, obj.priority, obj.readStatus,obj.attachment);
   }
   getFrom(){
     return this.sender;

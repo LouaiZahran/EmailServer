@@ -2,6 +2,7 @@ package com.university.email.model.email;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -12,7 +13,7 @@ public class EmailBuilder{
     private Queue<String> receiver=new LinkedList<>();
     private String subject;
     private String body;
-    private Object attachment;
+    private ArrayList<Object> attachment;
     private Integer priority;
     private boolean readStatus;
     private Date date;
@@ -29,7 +30,7 @@ public class EmailBuilder{
         this.body=body;
         return this;
     }
-    public EmailBuilder attachment(Object attachment){
+    public EmailBuilder attachment(ArrayList<Object> attachment){
         this.attachment=attachment;
         return this;
     }

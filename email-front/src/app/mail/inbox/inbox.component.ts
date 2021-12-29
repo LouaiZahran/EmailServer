@@ -5,7 +5,6 @@ import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';
 import { Email } from '../email';
 import { FoldersComponent } from '../folders/folders.component';
-import { MailComponent } from '../mail.component';
 
 
 @Component({
@@ -128,7 +127,7 @@ export class InboxComponent implements OnInit{
 
   deleteEmails(){
     for(let i = 0; i<10; i++){
-       if(!this.checkboxes[i].checked)
+      if(!this.checkboxes[i].checked)
         continue;
         this.api.moveEmail((this.allEmails.length-((this.pageNumber-1)*10+i)-1),"Inbox","Trash").subscribe();
     }

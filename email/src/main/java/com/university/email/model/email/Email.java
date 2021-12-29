@@ -16,7 +16,7 @@ public class Email implements Comparable<Email> {
     private Queue<String> receiver=new LinkedList<>();
     private String subject;
     private String body;
-    private Object attachment;
+    private ArrayList<Object> attachment;
     private Integer priority;
     private boolean readStatus;
     private Date date;
