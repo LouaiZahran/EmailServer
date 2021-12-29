@@ -36,8 +36,8 @@ public class ServerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/addContact")
-    public ResponseEntity<String> sendEmail(@RequestBody Contact contact){
-        UserInterface user = dao.findUserByUsername(contact.getUsername());
+    public ResponseEntity<String> addContact(@RequestBody Contact contact){
+        UserInterface user =  (UserInterface) dao.findUserByUsername(contact.getUsername());
         if(!user.isNill())
             user.addContact(contact);
         return new ResponseEntity<>(HttpStatus.OK);
