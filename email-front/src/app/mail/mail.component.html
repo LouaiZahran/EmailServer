@@ -1,7 +1,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="layout">
   <header>
-    <button class="search"> <i class="material-icons">search</i> </button>
+    <button class="search"> <i class="material-icons" (click)="search()">search</i> </button>
     <input type="text" class="search" placeholder = "Search..." [(ngModel)] = "searchString">
     <button class="filter" (click)="toggle()"> <i class="material-icons">filter_list</i> </button>
     <div class="filterAdvanced" #filter>

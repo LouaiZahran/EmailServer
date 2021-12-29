@@ -60,6 +60,28 @@ export class TrashComponent implements OnInit {
     )
   }
 
+  sortEmails(){
+    this.api.sortEmails(Globals.username, "Inbox").subscribe(
+      (mailList: Array<Email>) => {
+        this.allEmails = [];
+        mailList.forEach(
+          (email: Email) => {
+            this.allEmails.push(Email.createEmailFromObject(email));
+          }
+        )
+      },
+    () => {},
+    () => {
+      this.allEmails.reverse();
+      this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+      for (let i=0;i<10;i++){
+        this.checkboxes[i].checked=false;
+      }
+    }
+    )
+
+  }
+
   on(index : number) {
     this.myDisp.nativeElement.style.display = 'block';
     this.to = this.emails[index].getTo();
@@ -88,7 +110,7 @@ export class TrashComponent implements OnInit {
     this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
   }
   deleteEmails(){
-    for(let i = 9; i>=0; i--){
+    for(let i = 0; i<10; i++){
       if(!this.checkboxes[i].checked)
         continue;
       this.api.deleteEmail(this.allEmails.length-((this.pageNumber-1)*10+i)-1,"Trash").subscribe();
@@ -97,7 +119,7 @@ export class TrashComponent implements OnInit {
     this.load();
   }
   restore(){
-    for(let i = 9; i>=0; i--){
+    for(let i = 0; i<10; i++){
       if(!this.checkboxes[i].checked)
         continue;
         this.api.moveEmail((this.allEmails.length-((this.pageNumber-1)*10+i)-1),"Trash","Inbox").subscribe();

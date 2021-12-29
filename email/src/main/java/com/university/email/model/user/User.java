@@ -49,7 +49,7 @@ public class User implements UserInterface {
     @Override
     public Folder getFolder(String name){
         for(Folder folder: folders)
-            if(folder.getName().equals(name))
+            if(folder.getName().equalsIgnoreCase(name))
                 return folder;
         return null;
     }

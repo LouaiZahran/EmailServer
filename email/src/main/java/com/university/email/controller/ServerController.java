@@ -62,7 +62,10 @@ public class ServerController {
         UserInterface user = dao.findUserByUsername(username);
         if(user.isNill() || user.getFolder(folder) == null)
             return null;
-        PriorityQueue<Email> pq=new PriorityQueue<>(user.getFolder(folder).getContent());
+        PriorityQueue<Email> pq=new PriorityQueue<>();
+        for(int i=0;i<user.getFolder(folder).getContent().size();i++){
+            pq.add(user.getFolder(folder).getContent().get(0));
+        }
         return new ArrayList<>(pq);
     }
     @GetMapping("/filterEmails")

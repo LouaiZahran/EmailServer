@@ -35,6 +35,18 @@ export class ApiService {
       }
     });
   }
+  sortEmails(username: string, folder: string): Observable<Array<Email>>{
+    return this.http.get<Array<Email>>(`${environment.api_url}/sortEmails`, 
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: {
+        "username": username,
+        "folder": folder
+      }
+    });
+  }
   getContact(username: string): Observable<Array<Contact>>{
     return this.http.get<Array<Contact>>(`${environment.api_url}/getContacts`, 
     {
@@ -43,6 +55,20 @@ export class ApiService {
       }),
       params: {
         "username": username,
+      }
+    });
+  }
+  filterEmails(username:string,folder:string,filter:Array<string>,search:string){
+    return this.http.get<Array<Email>>(`${environment.api_url}/filterEmails`, 
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: {
+        "username": username,
+        "filter":filter,
+        "folder":folder,
+        "search":search,
       }
     });
   }

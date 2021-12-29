@@ -12,6 +12,7 @@ export class ComposeComponent implements OnInit {
   createEmail(receiver: string, subject:string, content:string){
     let receivers=receiver.split(" ");
     var priority = (<HTMLInputElement>document.getElementById("priority")).value;
+    console.log(priority);
     let email = new Email(Globals.username, receivers, subject, content,Number(priority), true);
     this.api.send("/sendEmail", email).subscribe();
   }
