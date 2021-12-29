@@ -34,7 +34,7 @@ div.upper{
 }
 div.upper button{
     border: none;
-    font-size: larger;
+    font-size: 24px;
     background-color: transparent;
     color: white;
     border-bottom: 1px solid rgba(234, 234, 234, 0.5);
@@ -58,14 +58,16 @@ div.lower input {
     width: 50%;
     height: 5%;
     margin-top: 5%;
-    font-size: 18px;
+    font-size: 20px;
     background-color: transparent;
     color: white;
+    font-weight: bold;
     transition: 0.25s;
 }
 div.lower input::placeholder{
   color: white;
-
+  font-weight: bold;
+  opacity: 0.8;
 }
 div.lower input:focus{
   outline: none;

@@ -74,6 +74,16 @@ public class User implements UserInterface {
         folders.removeIf(folder -> folder.getName().equals(name));
     }
     @Override
+    public ArrayList<Contact> findContact(String name){
+        ArrayList<Contact> ret=new ArrayList<>();
+        for(Contact contact: contacts){
+            if(contact.getName().indexOf(name)!=-1){
+                ret.add(contact);
+            }
+        }
+        return ret;
+    }
+    @Override
     public void addContact(Contact contact){
         contacts.add(contact);
     }

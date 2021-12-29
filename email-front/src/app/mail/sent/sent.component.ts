@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';
 import { Email } from '../email';
@@ -33,16 +33,19 @@ export class SentComponent implements OnInit {
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
-
+  
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
+    this.load();
+  }
+
+  load(){
     this.api.getEmails(Globals.username, "Sent").subscribe(
       (mailList: Array<Email>) => {
         mailList.forEach(
           (email: Email) => {
             this.allEmails.push(Email.createEmailFromObject(email));
-            console.log(typeof (Email.createEmailFromObject(email)));
           }
         )
       },
@@ -51,13 +54,13 @@ export class SentComponent implements OnInit {
       this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
     }
     )
-
   }
+  
 
   on(index : number) {
     this.myDisp.nativeElement.style.display = 'block';
-    this.from = this.emails[index].getSender();
-    this.to = this.emails[index].getReceiver();
+    this.to = this.emails[index].getTo();
+    this.from = this.emails[index].getFrom();
     this.subject = this.emails[index].getSubject();
     this.content = this.emails[index].getBody();
     this.date = this.emails[index].getDate();

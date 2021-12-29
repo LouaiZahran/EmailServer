@@ -28,7 +28,11 @@ class EmailApplicationTests {
 		System.out.println("Clearing db");
 		dao.setUsers(new ArrayList<>());
 	}
+	@Test
+	void addContact(){
+		dao.loadDAO();
 
+	}
 	@Test
 	void LoadTest(){
 		dao.loadDAO();

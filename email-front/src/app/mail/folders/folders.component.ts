@@ -1,8 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Email } from '../email';
-import { GetEmails } from '../get-emails';
-
 @Component({
   selector: 'app-folders',
   templateUrl: './folders.component.html',
@@ -54,11 +52,11 @@ export class FoldersComponent implements OnInit {
     else if(FoldersComponent.paste){
       FoldersComponent.paste = false;
       FoldersComponent.folders[index].emails = FoldersComponent.emails;
-      GetEmails.folderEmails = FoldersComponent.folders[index].emails;
+    //  GetEmails.folderEmails = FoldersComponent.folders[index].emails;
       this.router.navigate(['/mail/folder']);
     }
     else {
-      GetEmails.folderEmails = FoldersComponent.folders[index].emails;
+      //GetEmails.folderEmails = FoldersComponent.folders[index].emails;
       this.router.navigate(['/mail/folder']);
     }
   }

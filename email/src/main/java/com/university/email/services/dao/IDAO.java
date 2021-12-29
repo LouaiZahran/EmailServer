@@ -17,5 +17,5 @@ public interface IDAO {
     UserInterface findUserByUsername(String username);
     void addUser(User user);
     void removeUser(User user);
-
+    void moveEmail(String username,String oldFolderName,String newFolderName,int index);
 }

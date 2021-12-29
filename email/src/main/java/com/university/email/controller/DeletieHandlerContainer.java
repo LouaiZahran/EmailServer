@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor
-public class DeletionHandler {
+public class DeletieHandlerContainer {
     private String folderName;
     private int index;
     private String username;

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';
-import { FoldersComponent } from '../folders/folders.component';
 import { Email } from '../email';
+import { FoldersComponent } from '../folders/folders.component';
 
 @Component({
   selector: 'app-inbox',
@@ -33,34 +33,78 @@ export class InboxComponent implements OnInit{
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
-
+  
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
+    this.load();
+  }
+
+  load(){
     this.api.getEmails(Globals.username, "Inbox").subscribe(
       (mailList: Array<Email>) => {
+        this.allEmails = [];
         mailList.forEach(
           (email: Email) => {
             this.allEmails.push(Email.createEmailFromObject(email));
-            console.log(typeof (Email.createEmailFromObject(email)));
           }
         )
       },
     () => {},
     () => {
+      this.allEmails.reverse();
       this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+      for (let i=0;i<10;i++){
+        this.checkboxes[i].checked=false;
+      }
     }
     )
+  }
 
+  markAsRead(){/*
+    for(let i = 0; i<10; i++){
+      if(!this.checkboxes[i].checked)
+        continue;
+      this.api.deleteEmail(this.emails[i]).subscribe();
+      if(!this.emails[i].getRead())
+        this.emails[i].toggleRead();
+      this.api.send("/sendEmail", this.emails[i]).subscribe();
+    }
+    this.load();*/
+  }
+
+  deleteEmails(){
+    for(let i = 9; i>=0; i--){
+      if(!this.checkboxes[i].checked)
+        continue;
+      this.api.deleteEmail((this.pageNumber-1)*10+i,"Inbox").subscribe();
+    }
+
+    this.load();
+  }
+
+  markAsUnread(){/*
+    for(let i = 0; i<10; i++){
+      if(!this.checkboxes[i].checked)
+        continue;
+      this.api.deleteEmail(this.emails[i]).subscribe();
+      if(this.emails[i].getRead())
+        this.emails[i].toggleRead();
+      this.api.send("/sendEmail", this.emails[i]).subscribe();
+    }
+    this.emails = []
+    this.load();*/
   }
 
   on(index : number) {
     this.myDisp.nativeElement.style.display = 'block';
-    this.from = this.emails[index].getSender();
-    this.to = this.emails[index].getReceiver();
+    this.to = this.emails[index].getTo();
+    this.from = this.emails[index].getFrom();
     this.subject = this.emails[index].getSubject();
     this.content = this.emails[index].getBody();
     this.date = this.emails[index].getDate();
+    if(!this.emails[index].getRead())
+      this.emails[index].toggleRead();
   }
   off(){
     this.myDisp.nativeElement.style.display = 'none';
@@ -91,3 +135,4 @@ export class InboxComponent implements OnInit{
     });
   }
 }
+

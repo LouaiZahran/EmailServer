@@ -58,6 +58,7 @@ public class ServerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody Credential credential){
         if(!dao.findUserByUsername(credential.getUsername()).isNill())
@@ -68,9 +69,19 @@ public class ServerController {
     }
 
     @PostMapping("/deleteEmail")
-    public ResponseEntity<String> deleteEmail(@RequestBody DeletionHandler deletion){
+    public ResponseEntity<String> deleteEmail(@RequestBody DeletieHandlerContainer deletion){
         try {
             dao.deleteEmail(deletion.getUsername(),deletion.getFolderName(),deletion.getIndex());
+        }catch(Exception e){
+
+        }
+        dao.saveDAO();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping("/moveEmail")
+    public ResponseEntity<String> moveToTrash(@RequestBody MoveParameterContainer move){
+        try {
+            dao.moveEmail(move.getUsername(), move.getOldFolderName(),move.getNewFolderName(),move.getIndex());
         }catch(Exception e){
 
         }

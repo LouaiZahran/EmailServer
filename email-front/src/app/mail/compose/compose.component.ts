@@ -11,10 +11,17 @@ import { Email } from '../email';
 export class ComposeComponent implements OnInit {
 
   createEmail(receiver: string, subject:string, content:string){
-    let email = new Email(Globals.username, new Array<string>(receiver), subject, content, 1, true);
-    this.api.send("/sendEmail", email).subscribe(
+    let receivers=receiver.split(" ");
+    var priority = (<HTMLInputElement>document.getElementById("priority")).value;
+    let email = new Email(Globals.username, receivers, subject, content,Number(priority), true);
+    this.api.send("/sendEmail", email).subscribe();
+  }
 
-    );
+  saveDraft(receiver: string, subject:string, content:string){  
+    let receivers=receiver.split(" "); 
+    var priority = (<HTMLInputElement>document.getElementById("priority")).value;
+    let email = new Email(Globals.username, receivers, subject, content,Number(priority), true);
+    this.api.send("/saveDraft", email).subscribe();
   }
 
   constructor(private api: ApiService) {

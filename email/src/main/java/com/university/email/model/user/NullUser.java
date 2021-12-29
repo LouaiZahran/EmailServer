@@ -55,4 +55,7 @@ public class NullUser implements UserInterface{
     public void removeContact(Contact contact){
         return;
     }
+    @Override
+    public ArrayList<Contact> findContact(String name){return new ArrayList<>();}
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Email } from '../email';
-import { GetEmails } from '../get-emails';
+//import { GetEmails } from '../get-emails';
 
 @Component({
   selector: 'app-folder',
@@ -31,21 +31,21 @@ export class FolderComponent implements OnInit {
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
-  getEmails: GetEmails = new GetEmails;
+  //getEmails: GetEmails = new GetEmails;
   constructor() {}
 
   ngOnInit(): void {
-    this.allEmails = this.getEmails.getFolderEmails();
+    //this.allEmails = this.getEmails.getFolderEmails();
     this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
   }
 
   on(index : number) {
-    this.myDisp.nativeElement.style.display = 'block';
+    /*this.myDisp.nativeElement.style.display = 'block';
     this.to = this.emails[index].getTo();
     this.from = this.emails[index].getFrom();
     this.subject = this.emails[index].getSubject();
     this.content = this.emails[index].getBody();
-    this.date = this.emails[index].getDate();
+    this.date = this.emails[index].getDate();*/
   }
   off(){
     this.myDisp.nativeElement.style.display = 'none';

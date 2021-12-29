@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.university.email.model.credentials.Credential;
+import com.university.email.model.email.Email;
 import com.university.email.model.folder.Folder;
 import com.university.email.model.user.NullUser;
 import com.university.email.model.user.User;
@@ -36,6 +37,15 @@ public class DAO implements IDAO{
         UserInterface user=this.findUserByUsername(username);
         Folder folder=user.getFolder(folderName);
         folder.removeEmail(index);
+    }
+    @Override
+    public void moveEmail(String username,String oldFolderName,String newFolderName,int index){
+        UserInterface user=this.findUserByUsername(username);
+        Folder oFolder=user.getFolder(oldFolderName);
+        Email email=oFolder.getContent().get(index);
+        oFolder.removeEmail(index);
+        Folder nFolder=user.getFolder(newFolderName);
+        nFolder.addEmail(email);
     }
 
     @Override
