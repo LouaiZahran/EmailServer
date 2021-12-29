@@ -88,7 +88,7 @@ public class User implements UserInterface {
         contacts.add(contact);
     }
     @Override
-    public void removeContact(Contact contact){
-        contacts.remove(contact);
+    public void removeContact(int index){
+        contacts.remove(index);
     }
 }

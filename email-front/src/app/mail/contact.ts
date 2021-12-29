@@ -15,5 +15,8 @@ export class Contact {
     getAddressList(){
         return this.addressList;
     }
+    static createContactFromObject(obj: any){
+        return new Contact(obj.name,obj.addressList);
+      }
 
 }

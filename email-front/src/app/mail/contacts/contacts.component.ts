@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
+import { Globals } from 'src/app/globals/Globals';
 import { Contact } from '../contact';
 
 @Component({
@@ -10,11 +11,8 @@ import { Contact } from '../contact';
 export class ContactsComponent implements OnInit {
 
   @ViewChild('myDisplay') myDisp!: ElementRef;
-  to!: Array<string>;
-  subject!: string;
-  from!:string;
-  content!: string;
-  date!: string;
+  addressList!: Array<string>;
+  name!: string;
   contact!: Contact;
   contacts: Contact[] = [];
   allcontacts: Contact[] = [];
@@ -40,19 +38,19 @@ export class ContactsComponent implements OnInit {
   }
 
   load(){
-    this.api.getEmails(Globals.username, "Inbox").subscribe(
-      (mailList: Array<Email>) => {
-        this.allEmails = [];
-        mailList.forEach(
-          (email: Email) => {
-            this.allEmails.push(Email.createEmailFromObject(email));
+    this.api.getContact(Globals.username).subscribe(
+      (contactList: Array<Contact>) => {
+        this.allcontacts = [];
+        contactList.forEach(
+          (contact: Contact) => {
+            this.allcontacts.push(Contact.createContactFromObject(contact));
           }
         )
       },
     () => {},
     () => {
-      this.allEmails.reverse();
-      this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+      this.allcontacts.reverse();
+      this.contacts = this.allcontacts.slice((this.pageNumber - 1) * 10, this.allcontacts.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allcontacts.length);
       for (let i=0;i<10;i++){
         this.checkboxes[i].checked=false;
       }
@@ -60,50 +58,23 @@ export class ContactsComponent implements OnInit {
     )
   }
 
-  markAsRead(){/*
-    for(let i = 0; i<10; i++){
-      if(!this.checkboxes[i].checked)
-        continue;
-      this.api.deleteEmail(this.emails[i]).subscribe();
-      if(!this.emails[i].getRead())
-        this.emails[i].toggleRead();
-      this.api.send("/sendEmail", this.emails[i]).subscribe();
-    }
-    this.load();*/
-  }
 
-  deleteEmails(){
+  deleteContact(){
     for(let i = 9; i>=0; i--){
       if(!this.checkboxes[i].checked)
         continue;
-      this.api.deleteEmail((this.pageNumber-1)*10+i,"Inbox").subscribe();
+      this.api.deleteContact(this.allcontacts.length-((this.pageNumber-1)*10+i)-1).subscribe();
     }
 
     this.load();
   }
 
-  markAsUnread(){/*
-    for(let i = 0; i<10; i++){
-      if(!this.checkboxes[i].checked)
-        continue;
-      this.api.deleteEmail(this.emails[i]).subscribe();
-      if(this.emails[i].getRead())
-        this.emails[i].toggleRead();
-      this.api.send("/sendEmail", this.emails[i]).subscribe();
-    }
-    this.emails = []
-    this.load();*/
-  }
-
   on(index : number) {
     this.myDisp.nativeElement.style.display = 'block';
-    this.to = this.emails[index].getTo();
-    this.from = this.emails[index].getFrom();
-    this.subject = this.emails[index].getSubject();
-    this.content = this.emails[index].getBody();
-    this.date = this.emails[index].getDate();
-    if(!this.emails[index].getRead())
-      this.emails[index].toggleRead();
+    this.name=this.contacts[index].getName();
+    this.addressList=this.contacts[index].getAddressList();
+    console.log(this.name);
+    console.log(typeof( this.addressList));
   }
   off(){
     this.myDisp.nativeElement.style.display = 'none';
@@ -117,12 +88,12 @@ export class ContactsComponent implements OnInit {
 
   next(){
     this.pageNumber += 1;
-    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+    this.contacts = this.allcontacts.slice((this.pageNumber - 1) * 10, this.allcontacts.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allcontacts.length);
   }
 
   prev(){
     this.pageNumber -= 1;
-    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+    this.contacts = this.allcontacts.slice((this.pageNumber - 1) * 10, this.allcontacts.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allcontacts.length);
   }
  
 

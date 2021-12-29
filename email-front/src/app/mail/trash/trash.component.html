@@ -6,7 +6,8 @@
   <a class="date">Date</a>
 </div>
 <div class="toolbox">
-  <button title="Restore"><i class="material-icons">undo</i></button>
+  <button title="Restore" (click)="restore()"><i class="material-icons">undo</i></button>
+  <button title="Delete"><i class="material-icons" (click)=deleteEmails()>delete</i></button>
   <button title="Previous" class="prev" [disabled] = "pageNumber == 1" (click)="prev()"><i class="material-icons">arrow_back</i></button>
   <button title="Next" class="next" [disabled] = "allEmails.length - (pageNumber - 1) * 10 <= 10" (click)="next()"><i class="material-icons">arrow_forward</i></button>
   <span>{{1 + (pageNumber - 1) * 10}}―{{allEmails.length - (pageNumber - 1) * 10 > 10 ? pageNumber * 10 : allEmails.length}} of {{allEmails.length}}</span>

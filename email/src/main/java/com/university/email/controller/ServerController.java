@@ -42,6 +42,13 @@ public class ServerController {
             user.addContact(contact);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/getContacts")
+    public ArrayList<Contact> getContacts(@RequestParam String username){
+        UserInterface user = dao.findUserByUsername(username);
+        if(user.isNill() || user.getContacts() == null)
+            return null;
+        return user.getContacts();
+    }
 
     @GetMapping("/getEmails")
     public ArrayList<Email> getEmails(@RequestParam String username, @RequestParam String folder){
@@ -100,9 +107,18 @@ public class ServerController {
         dao.saveDAO();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping("/deleteContact")
+    public ResponseEntity<String> deleteContact(@RequestBody contactDeleteParams deletion){
+        try {
+            dao.findUserByUsername(deletion.getUsername()).removeContact(deletion.getIndex());
+        }catch(Exception e){
 
+        }
+        dao.saveDAO();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @PostMapping("/deleteEmail")
-    public ResponseEntity<String> deleteEmail(@RequestBody DeletieHandlerContainer deletion){
+    public ResponseEntity<String> deleteEmail(@RequestBody emailDeleteParams deletion){
         try {
             dao.deleteEmail(deletion.getUsername(),deletion.getFolderName(),deletion.getIndex());
         }catch(Exception e){
@@ -112,7 +128,7 @@ public class ServerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/moveEmail")
-    public ResponseEntity<String> moveToTrash(@RequestBody MoveParameterContainer move){
+    public ResponseEntity<String> moveToTrash(@RequestBody emailMoveParams move){
         try {
             dao.moveEmail(move.getUsername(), move.getOldFolderName(),move.getNewFolderName(),move.getIndex());
         }catch(Exception e){

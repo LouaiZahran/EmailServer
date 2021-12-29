@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor
-public class DeletieHandlerContainer {
-    private String folderName;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class emailMoveParams {
+    private String oldFolderName;
+    private String newFolderName;
     private int index;
     private String username;
 }

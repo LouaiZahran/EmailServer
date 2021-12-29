@@ -12,43 +12,43 @@
   <span>{{1 + (pageNumber - 1) * 10}}―{{allcontacts.length - (pageNumber - 1) * 10 > 10 ? pageNumber * 10 : allcontacts.length}} of {{allcontacts.length}}</span>
 </div>
 <div id="container">
-  <div class="row{{contacts[0].getRead() ? '' : ' unread'}}" (click)="on(0)" *ngIf="contacts.length > 0">
+  <div (click)="on(0)" *ngIf="contacts.length > 0">
     <input type="checkbox" [(ngModel)]="checkboxes[0].checked" [value]="checkboxes[0].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[0].getName()}}</span>
   </div>
-  <div class="row{{contacts[1].getRead() ? '' : ' unread'}}" (click)="on(1)" *ngIf="contacts.length > 1">
+  <div (click)="on(1)" *ngIf="contacts.length > 1">
     <input type="checkbox" [(ngModel)]="checkboxes[1].checked" [value]="checkboxes[1].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[1].getName()}}</span>
   </div>
-  <div class="row{{contacts[2].getRead() ? '' : ' unread'}}" (click)="on(2)" *ngIf="contacts.length > 2">
+  <div (click)="on(2)" *ngIf="contacts.length > 2">
     <input type="checkbox" [(ngModel)]="checkboxes[2].checked" [value]="checkboxes[2].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[2].getName()}}</span>
   </div>
-  <div class="row{{contacts[3].getRead() ? '' : ' unread'}}" (click)="on(3)" *ngIf="contacts.length > 3">
+  <div (click)="on(3)" *ngIf="contacts.length > 3">
     <input type="checkbox" [(ngModel)]="checkboxes[3].checked" [value]="checkboxes[3].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[3].getName()}}</span>
   </div>
-  <div class="row{{contacts[4].getRead() ? '' : ' unread'}}" (click)="on(4)" *ngIf="contacts.length > 4">
+  <div (click)="on(4)" *ngIf="contacts.length > 4">
     <input type="checkbox" [(ngModel)]="checkboxes[4].checked" [value]="checkboxes[4].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[4].getName()}}</span>
   </div>
-  <div class="row{{contacts[5].getRead() ? '' : ' unread'}}" (click)="on(5)" *ngIf="contacts.length > 5">
+  <div (click)="on(5)" *ngIf="contacts.length > 5">
     <input type="checkbox" [(ngModel)]="checkboxes[5].checked" [value]="checkboxes[5].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[5].getName()}}</span>
   </div>
-  <div class="row{{contacts[6].getRead() ? '' : ' unread'}}" (click)="on(6)" *ngIf="contacts.length > 6">
+  <div (click)="on(6)" *ngIf="contacts.length > 6">
     <input type="checkbox" [(ngModel)]="checkboxes[6].checked" [value]="checkboxes[6].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[6].getName()}}</span>
   </div>
-  <div class="row{{contacts[7].getRead() ? '' : ' unread'}}" (click)="on(7)" *ngIf="contacts.length > 7">
+  <div (click)="on(7)" *ngIf="contacts.length > 7">
     <input type="checkbox" [(ngModel)]="checkboxes[7].checked" [value]="checkboxes[7].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[7].getName()}}</span>
   </div>
-  <div class="row{{contacts[8].getRead() ? '' : ' unread'}}" (click)="on(8)" *ngIf="contacts.length > 8">
+  <div (click)="on(8)" *ngIf="contacts.length > 8">
     <input type="checkbox" [(ngModel)]="checkboxes[8].checked" [value]="checkboxes[8].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[8].getName()}}</span>
   </div>
-  <div class="row{{contacts[9].getRead() ? '' : ' unread'}}" (click)="on(9)" *ngIf="contacts.length > 9">
+  <div (click)="on(9)" *ngIf="contacts.length > 9">
     <input type="checkbox" [(ngModel)]="checkboxes[9].checked" [value]="checkboxes[9].value" (click)="$event.stopPropagation()"/>
     <span class="Name">{{contacts[9].getName()}}</span>
   </div>

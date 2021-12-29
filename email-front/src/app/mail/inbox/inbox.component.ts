@@ -77,7 +77,7 @@ export class InboxComponent implements OnInit{
     for(let i = 9; i>=0; i--){
       if(!this.checkboxes[i].checked)
         continue;
-      this.api.deleteEmail((this.pageNumber-1)*10+i,"Inbox").subscribe();
+        this.api.moveEmail((this.allEmails.length-((this.pageNumber-1)*10+i)-1),"Inbox","Trash").subscribe();
     }
 
     this.load();
