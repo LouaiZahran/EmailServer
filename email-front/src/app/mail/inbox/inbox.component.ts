@@ -1,5 +1,4 @@
 
-import { MailComponent } from './../mail.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';

@@ -46,8 +46,14 @@ export class ComposeComponent implements OnInit {
     this.api.send("/saveDraft", email).subscribe();
   }
 
-
+selectedFile = null;
+attach(event: any){
+  this.selectedFile = event.target.files[0];
+  console.log(this.selectedFile);
+}
 upload(){
+  const fd=new FormData();
+
   // this.api.send()
 }
 
