@@ -1,3 +1,4 @@
+import { ComposeComponent } from './../compose/compose.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';
@@ -33,7 +34,7 @@ export class DraftComponent implements OnInit {
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
-  
+
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
@@ -63,6 +64,7 @@ export class DraftComponent implements OnInit {
     this.subject = this.emails[index].getSubject();
     this.content = this.emails[index].getBody();
     this.date = this.emails[index].getDate();
+
   }
   off(){
     this.myDisp.nativeElement.style.display = 'none';
@@ -84,5 +86,11 @@ export class DraftComponent implements OnInit {
     this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
   }
 
+  edit(){
+    ComposeComponent.draftTo = this.to;
+    ComposeComponent.draftSubject = this.subject;
+    ComposeComponent.draftContent = this.content;
+    ComposeComponent.draftEdit = true;
+  }
 
 }

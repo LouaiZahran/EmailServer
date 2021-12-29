@@ -19,7 +19,7 @@
       opacity: 1;
     }
   }
-  
+
   .msg {
     position: absolute;
     top: 50%;
@@ -44,7 +44,7 @@
       top: 50%;
     }
   }
-  
+
   .close {
     font-size: 50px;
     margin-left: 95%;
@@ -54,7 +54,7 @@
   .close:hover {
     color: black;
   }
-  
+
   div.toolbox {
     width: 90%;
     height: 6.5%;
@@ -81,7 +81,7 @@
     color: #6bd30b;
     text-decoration: underline;
   }
-  
+
   div.toolbox button {
     color: #95979b;
     border: none;
@@ -114,7 +114,7 @@
   div.toolbox button:disabled {
     color: #95979b;
   }
-  
+
   div.row {
     margin: auto;
     margin-top: 3px;
@@ -134,7 +134,7 @@
   div.row.unread {
     font-weight: bold;
   }
-  
+
   span.to,
   span.subject {
     width: 38%;
@@ -183,4 +183,16 @@
     margin-left: 20px;
     font-style: italic;
   }
-  
+
+  button.edit{
+    color:#d4d5d8;
+    font-weight: bold;
+    background-color: #1D2127;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    top: 90%;
+    right: 20%;
+  }
