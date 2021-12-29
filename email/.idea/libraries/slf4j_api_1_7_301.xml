@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="gson-2.8.9">
+  <library name="slf4j-api-1.7.301">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/gson-2.8.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.30.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

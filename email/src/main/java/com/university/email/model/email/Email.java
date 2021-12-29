@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
+@Setter
 @Getter
 @NoArgsConstructor
 public class Email implements Comparable<Email> {
@@ -46,5 +47,13 @@ public class Email implements Comparable<Email> {
         return this.getPriority().compareTo(email.getPriority());
     }
 
-
+    @Override
+    public boolean equals(Object other){
+        Email email = (Email)other;
+        if(email.getDate().getTime() == this.date.getTime()){
+            System.out.println("HERE");
+            return true;
+        }
+        return false;
+    }
 }

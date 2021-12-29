@@ -31,6 +31,7 @@ public class ServerController {
         UserInterface sender = (UserInterface) dao.findUserByUsername(email.getSender());
         if(!sender.isNill())
             sender.sendEmail(email);
+        dao.saveDAO();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -42,4 +43,32 @@ public class ServerController {
         return user.getFolder(folder).getContent();
     }
 
+    @PostMapping("/saveDraft")
+    public ResponseEntity<String> saveDraft(@RequestBody Email email){
+        UserInterface sender = (UserInterface) dao.findUserByUsername(email.getSender());
+        if(!sender.isNill())
+            sender.getFolder("Draft").addEmail(email);
+        dao.saveDAO();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody Credential credential){
+        if(!dao.findUserByUsername(credential.getUsername()).isNill())
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        dao.addUser(new User(credential));
+        dao.saveDAO();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/deleteEmail")
+    public ResponseEntity<String> deleteEmail(@RequestBody Email email){
+        try {
+            dao.deleteEmail(email);
+        }catch(Exception e){
+
+        }
+        dao.saveDAO();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

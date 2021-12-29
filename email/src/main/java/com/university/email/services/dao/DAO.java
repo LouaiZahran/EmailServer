@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.university.email.model.credentials.Credential;
+import com.university.email.model.email.Email;
+import com.university.email.model.folder.Folder;
 import com.university.email.model.user.NullUser;
 import com.university.email.model.user.User;
 import com.university.email.model.user.UserInterface;
@@ -31,6 +33,18 @@ public class DAO implements IDAO{
     public static DAO getInstance() {
         return instance;
     }
+
+    public void deleteEmail(Email email){
+        for(UserInterface user: users){
+            for(Folder folder: user.getFolders()){
+                for(Email mail: folder.getContent()){
+                    if(mail.equals(email))
+                        folder.removeEmail(mail);
+                }
+            }
+        }
+    }
+
     @Override
     public ArrayList<UserInterface> getUsers() {
         return users;
@@ -46,7 +60,7 @@ public class DAO implements IDAO{
         try {
             ObjectMapper mapper=new ObjectMapper();
             String jsonStr=mapper.writeValueAsString(users);
-            System.out.println("\n"+jsonStr);
+            //System.out.println("\n"+jsonStr);
             FileWriter writer = new FileWriter(file);
             writer.write(jsonStr);
             writer.close();

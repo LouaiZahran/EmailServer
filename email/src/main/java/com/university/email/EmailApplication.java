@@ -13,9 +13,6 @@ public class EmailApplication {
 	private static final IDAO dao = DAO.getInstance();
 	public static void main(String[] args) {
 		dao.loadDAO();
-		User user = new User(new Credential("Louai", "123"));
-		dao.addUser(user);
-		dao.saveDAO();
 		SpringApplication.run(EmailApplication.class, args);
 	}
 

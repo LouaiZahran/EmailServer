@@ -16,8 +16,6 @@ public class User implements UserInterface {
     private final ArrayList<Contact> contacts;
     private final EmailSender emailSender;
 
-
-
     public User(Credential credential){
         this.credential = credential;
         folders = new ArrayList<>();
