@@ -1,6 +1,8 @@
 package com.university.email.controller;
 
+import com.university.email.model.contact.Contact;
 import com.university.email.model.credentials.Credential;
+import com.university.email.model.criteria.*;
 import com.university.email.model.email.Email;
 import com.university.email.model.user.User;
 import com.university.email.model.user.UserInterface;
@@ -33,6 +35,13 @@ public class ServerController {
             sender.sendEmail(email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping("/addContact")
+    public ResponseEntity<String> sendEmail(@RequestBody Contact contact){
+        UserInterface user = dao.findUserByUsername(contact.getUsername());
+        if(!user.isNill())
+            user.addContact(contact);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @GetMapping("/getEmails")
     public ArrayList<Email> getEmails(@RequestParam String username, @RequestParam String folder){
@@ -48,6 +57,30 @@ public class ServerController {
             return null;
         PriorityQueue<Email> pq=new PriorityQueue<>(user.getFolder(folder).getContent());
         return new ArrayList<>(pq);
+    }
+    @GetMapping("/filterEmails")
+    public ArrayList<Email> filter(@RequestParam String username, @RequestParam String folder,
+                                   @RequestParam ArrayList<String> filter,@RequestParam String search) {
+        UserInterface user = dao.findUserByUsername(username);
+        if(user.isNill() || user.getFolder(folder) == null)
+            return null;
+        Criteria criteria=null;
+        if(filter.contains("from")){
+            criteria=new CriteriaSender(search);
+        }
+        else if(filter.contains("to")){
+            criteria=new CriteriaReceiver(search);
+        }
+        else if(filter.contains("Body")){
+            criteria=new CriteriaBody(search);
+        }
+        else if(filter.contains("Subject")){
+            criteria=new CriteriaSubject(search);
+        }
+        else{
+            return new ArrayList<>();
+        }
+        return user.getFolder(folder).search(criteria);
     }
     @PostMapping("/saveDraft")
     public ResponseEntity<String> saveDraft(@RequestBody Email email){

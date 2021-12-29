@@ -11,4 +11,5 @@ import java.util.ArrayList;
 public class Contact {
     private String name;
     private ArrayList<String> addressList;
+    private String username;
 }
