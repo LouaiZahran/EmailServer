@@ -64,7 +64,7 @@ public class ServerController {
             return null;
         PriorityQueue<Email> pq=new PriorityQueue<>();
         for(int i=0;i<user.getFolder(folder).getContent().size();i++){
-            pq.add(user.getFolder(folder).getContent().get(0));
+            pq.add(user.getFolder(folder).getContent().get(i));
         }
         return new ArrayList<>(pq);
     }

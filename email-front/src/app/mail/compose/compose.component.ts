@@ -12,6 +12,7 @@ export class ComposeComponent implements OnInit {
   createEmail(receiver: string, subject:string, content:string){
     let receivers=receiver.split(" ");
     var priority = (<HTMLInputElement>document.getElementById("priority")).value;
+    console.log(priority);
     let email = new Email(Globals.username, receivers, subject, content,Number(priority), true);
     this.api.send("/sendEmail", email).subscribe();
   }
@@ -23,8 +24,16 @@ export class ComposeComponent implements OnInit {
     this.api.send("/saveDraft", email).subscribe();
   }
 
-
-
+selectedFile = null;
+attach(event: any){
+  this.selectedFile = event.target.files[0];
+  console.log(this.selectedFile);
+}
+upload(){
+  const fd=new FormData();
+  
+  // this.api.send()
+}
 
 
   constructor(private api: ApiService) { }
