@@ -1,17 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ApiService } from 'src/app/api/api.service';
-import { Globals } from 'src/app/globals/Globals';
-import { FoldersComponent } from '../folders/folders.component';
 import { Email } from '../email';
+import { GetEmails } from '../get-emails';
 
 @Component({
-  selector: 'app-inbox',
-  templateUrl: './inbox.component.html',
-  styleUrls: ['./inbox.component.css'],
+  selector: 'app-folder',
+  templateUrl: './folder.component.html',
+  styleUrls: ['./folder.component.css']
 })
-export class InboxComponent implements OnInit{
+export class FolderComponent implements OnInit {
   @ViewChild('myDisplay') myDisp!: ElementRef;
-  to!: Array<string>;
+  to!: string;
   subject!: string;
   from!:string;
   content!: string;
@@ -33,31 +31,18 @@ export class InboxComponent implements OnInit{
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
-
-  constructor(private api: ApiService) {}
+  getEmails: GetEmails = new GetEmails;
+  constructor() {}
 
   ngOnInit(): void {
-    this.api.getEmails(Globals.username, "Inbox").subscribe(
-      (mailList: Array<Email>) => {
-        mailList.forEach(
-          (email: Email) => {
-            this.allEmails.push(Email.createEmailFromObject(email));
-            console.log(typeof (Email.createEmailFromObject(email)));
-          }
-        )
-      },
-    () => {},
-    () => {
-      this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
-    }
-    )
-
+    this.allEmails = this.getEmails.getFolderEmails();
+    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
   }
 
   on(index : number) {
     this.myDisp.nativeElement.style.display = 'block';
-    this.from = this.emails[index].getSender();
-    this.to = this.emails[index].getReceiver();
+    this.to = this.emails[index].getTo();
+    this.from = this.emails[index].getFrom();
     this.subject = this.emails[index].getSubject();
     this.content = this.emails[index].getBody();
     this.date = this.emails[index].getDate();
@@ -80,14 +65,5 @@ export class InboxComponent implements OnInit{
   prev(){
     this.pageNumber -= 1;
     this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
-  }
-  addToFolder(){
-    FoldersComponent.paste = true;
-    FoldersComponent.emails = [];
-    this.checkboxes.forEach(checkbox => {
-      if(checkbox.checked){
-        FoldersComponent.emails.push(this.emails[checkbox.value])
-      }
-    });
   }
 }

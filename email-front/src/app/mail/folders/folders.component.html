@@ -1,1 +1,19 @@
-<div id="container"></div>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="toolbox">
+    <button title="New folder" (click)="on()"><i class="material-icons">folder</i></button>
+    <button title="Delete" class="{{isDeleting ? 'active' : ''}}" (click)="delete()"><i class="material-icons">delete</i></button>
+  </div>
+<div id="container" >
+    <div *ngFor="let button of getFolders(); let i = index">
+        <button *ngIf="button.visible" class="folder" (click)="action(i)">
+            <i class="material-icons">folder</i><span>{{button.name}}</span>
+        </button>
+    </div>
+</div>
+<div id = 'display' #myDisplay >
+    <div class="msg">
+        <input type="text" [(ngModel)]="name"><br>
+        <button (click)="off()">OK</button>
+    </div>
+  </div>
+  

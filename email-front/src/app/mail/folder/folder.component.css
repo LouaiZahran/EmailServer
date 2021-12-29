@@ -1,0 +1,185 @@
+#display {
+    display: none;
+    z-index: 2;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #00000066;
+    animation-name: fade;
+    animation-duration: 0.7s;
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .msg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    color: gray;
+    width: 60%;
+    height: 80%;
+    border-radius: 20px;
+    padding: 15px;
+    animation-name: pop;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-in-out;
+    box-shadow: 5px 5px rgba(107, 211, 11);
+  
+  }
+  @keyframes pop {
+    from {
+      top: 0%;
+    }
+    to {
+      top: 50%;
+    }
+  }
+  
+  .close {
+    font-size: 50px;
+    margin-left: 95%;
+    cursor: pointer;
+    color: #aaa;
+  }
+  .close:hover {
+    color: black;
+  }
+  
+  div.toolbox {
+    width: 90%;
+    height: 6.5%;
+    display: flex;
+    background-color: #eee;
+    margin: auto;
+    padding: 0 3%;
+    align-items: center;
+  }
+  div.toolbox a {
+    text-align: left;
+    margin-left: 6%;
+    cursor: pointer;
+    font-weight: bold;
+    color: #424242;
+  }
+  div.toolbox a.subject {
+    margin-left: 36%;
+  }
+  div.toolbox a.date {
+    margin-left: 35%;
+  }
+  div.toolbox a:hover {
+    color: #6BD30B;
+    text-decoration: underline;
+  }
+  
+  div.toolbox button {
+    color: #95979b;
+    border: none;
+    margin-right: 3%;
+    font-size: 24px;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  div.toolbox button:hover {
+    background-color: #d4d5d8;
+    border-radius: 10%;
+  }
+  div.toolbox button.read, div.toolbox button.prev, div.toolbox button.next {
+    color: deepskyblue;
+    cursor: pointer;
+  }
+  div.toolbox span {
+    color: #424242;
+    margin-left: 2%;
+    padding-right: 2.5%;
+    font-weight: bold;
+    width: 8.5%;
+    white-space: nowrap;
+    text-align: left;
+  }
+  div.toolbox button.prev {
+    margin-left: auto;
+  }
+  div.toolbox button:disabled {
+    color: #95979b;
+  }
+  
+  div.row {
+    margin: auto;
+    margin-top: 3px;
+    font-size: 18px;
+    width: 90%;
+    height: 8%;
+    display: flex;
+    align-items: center;
+    border: 2px solid #eee;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0 3%;
+  }
+  div.row:hover {
+    border: 2px solid #d4d5d8;
+  }
+  div.row.unread {
+    font-weight: bold;
+  }
+  
+  span.from,
+  span.subject {
+    width: 38%;
+    margin-left: 6%;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  span.date {
+    width: 12%;
+    margin-left: 6%;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #display .msg .subject{
+    font-size: 40px;
+    margin-top: -50px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: black;
+  }
+  #display .msg .users{
+    padding: 5px;
+    font-size: 22px;
+    text-align: left;
+    border-bottom: 2px solid rgb(199, 199, 199);
+    font-style: italic;
+  }
+  #display .msg .users .arrow{
+    font-size: 30px;
+    color: #6BD30B;
+  }
+  #display .msg .content{
+    text-align: center;
+    height: 60%;
+    font-size: 20px;
+    margin: 15px 0px;
+    margin-bottom: 60px;
+  }
+  #display .msg .date{
+    text-align: right;
+    font-size: 15px;
+    margin-left: 20px;
+    font-style: italic;
+  }
