@@ -12,6 +12,13 @@ public class OrCriteria implements Criteria{
 
     @Override
     public ArrayList<Email> meetCriteria(ArrayList<Email> emails) {
+        if(criteria==null && otherCriteria!=null)
+            return otherCriteria.meetCriteria(emails);
+        if(criteria!=null && otherCriteria==null)
+            return criteria.meetCriteria(emails);
+        if(criteria==null && otherCriteria==null)
+            return new ArrayList<Email>();
+
         ArrayList<Email> set1 = criteria.meetCriteria(emails);
         ArrayList<Email> set2 = otherCriteria.meetCriteria(emails);
         ArrayList<Email> ret = (ArrayList<Email>) set2.clone();

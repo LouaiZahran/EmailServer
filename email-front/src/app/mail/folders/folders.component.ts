@@ -11,7 +11,7 @@ export class FoldersComponent implements OnInit {
   name:string="New Folder";
   static paste = false;
   static emails:Email[] = [];
-  static folders: any[] = [
+  folders: any[] = [
     {name: 'New Folder', visible: false, emails: [] },
     {name: 'New Folder', visible: false, emails: [] },
     {name: 'New Folder', visible: false, emails: [] },
@@ -32,10 +32,10 @@ export class FoldersComponent implements OnInit {
   }
 
   newFolder(name: string){
-    for (let index = 0; index < FoldersComponent.folders.length; index++) {
-      if (!FoldersComponent.folders[index].visible){
-        FoldersComponent.folders[index].visible = true;
-        FoldersComponent.folders[index].name = name;
+    for (let index = 0; index < this.folders.length; index++) {
+      if (!this.folders[index].visible){
+        this.folders[index].visible = true;
+        this.folders[index].name = name;
         break;
       }
     }
@@ -46,17 +46,17 @@ export class FoldersComponent implements OnInit {
 
   action(index: number){
     if(this.isDeleting){
-      FoldersComponent.folders[index].emails = [];
-      FoldersComponent.folders[index].visible = false;
+      this.folders[index].emails = [];
+      this.folders[index].visible = false;
     }
     else if(FoldersComponent.paste){
       FoldersComponent.paste = false;
-      FoldersComponent.folders[index].emails = FoldersComponent.emails;
-    //  GetEmails.folderEmails = FoldersComponent.folders[index].emails;
+      this.folders[index].emails = FoldersComponent.emails;
+    //  GetEmails.folderEmails = this.folders[index].emails;
       this.router.navigate(['/mail/folder']);
     }
     else {
-      //GetEmails.folderEmails = FoldersComponent.folders[index].emails;
+      //GetEmails.folderEmails = this.folders[index].emails;
       this.router.navigate(['/mail/folder']);
     }
   }
@@ -72,6 +72,7 @@ export class FoldersComponent implements OnInit {
   }
 
   getFolders(){
-    return FoldersComponent.folders;
+    return this.folders;
   }
+  
 }

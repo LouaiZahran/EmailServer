@@ -30,6 +30,7 @@ export class ContactsComponent implements OnInit {
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
+  searchString:string='';
   
   constructor(private api: ApiService) {}
 
@@ -57,6 +58,28 @@ export class ContactsComponent implements OnInit {
     }
     )
   }
+  search(){
+    if(this.searchString.length==0)
+      this.load();
+   this.api.filterContacts(Globals.username,this.searchString).subscribe(
+      (contactList: Array<Contact>) => {
+        this.allcontacts = [];
+        contactList.forEach(
+          (contact: Contact) => {
+            this.allcontacts.push(Contact.createContactFromObject(contact));
+          }
+        )
+      },
+    () => {},
+    () => {
+      this.allcontacts.reverse();
+      this.contacts = this.allcontacts.slice((this.pageNumber - 1) * 10, this.allcontacts.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allcontacts.length);
+      for (let i=0;i<10;i++){
+        this.checkboxes[i].checked=false;
+      }
+    }
+    )
+}
 
 
   deleteContact(){

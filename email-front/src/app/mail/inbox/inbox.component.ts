@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';
@@ -36,10 +35,14 @@ export class InboxComponent implements OnInit{
   selectAll: boolean = false;
   pageNumber: number = 1;
   prioSort: boolean = true;
+  searchString: string = '';
+  filterTo:boolean = false;
+  filterFrom:boolean = false;
+  filterBody:boolean = false;
+  filterSubject:boolean = false;
+
   constructor(private api: ApiService) {}
 
-  static searchString:string;
-  static filters:Array<string>;
   
   ngOnInit(): void {
     this.load();
@@ -65,8 +68,23 @@ export class InboxComponent implements OnInit{
     )
   }
  
- search(searchString:string,filter:Array<string>){
-    this.api.filterEmails(Globals.username, "Inbox",filter,searchString).subscribe(
+ search(){
+      if(!this.filterBody && !this.filterFrom && !this.filterSubject && !this.filterTo && this.searchString.length==0)
+        this.load();
+      var filters=Array<string>();
+      if(this.filterTo){
+        filters.push("to");
+      }
+      if(this.filterFrom){
+        filters.push("from");
+      }
+      if(this.filterBody){
+        filters.push("Body");
+      }
+      if(this.filterSubject){
+        filters.push("Subject");
+      }
+    this.api.filterEmails(Globals.username, "Inbox",filters,this.searchString).subscribe(
       (mailList: Array<Email>) => {
         this.allEmails = [];
         mailList.forEach(
@@ -82,9 +100,10 @@ export class InboxComponent implements OnInit{
       for (let i=0;i<10;i++){
         this.checkboxes[i].checked=false;
       }
-    }
+      }
     )
   }
+  
   sortEmails(){
     this.prioSort=!this.prioSort;
     if(this.prioSort){
@@ -112,18 +131,6 @@ export class InboxComponent implements OnInit{
 
   }
 
-  markAsRead(){/*
-    for(let i = 0; i<10; i++){
-      if(!this.checkboxes[i].checked)
-        continue;
-      this.api.deleteEmail(this.emails[i]).subscribe();
-      if(!this.emails[i].getRead())
-        this.emails[i].toggleRead();
-      this.api.send("/sendEmail", this.emails[i]).subscribe();
-    }
-    this.load();*/
-  }
-
   deleteEmails(){
     for(let i = 0; i<10; i++){
       if(!this.checkboxes[i].checked)
@@ -134,18 +141,6 @@ export class InboxComponent implements OnInit{
     this.load();
   }
 
-  markAsUnread(){/*
-    for(let i = 0; i<10; i++){
-      if(!this.checkboxes[i].checked)
-        continue;
-      this.api.deleteEmail(this.emails[i]).subscribe();
-      if(this.emails[i].getRead())
-        this.emails[i].toggleRead();
-      this.api.send("/sendEmail", this.emails[i]).subscribe();
-    }
-    this.emails = []
-    this.load();*/
-  }
 
   on(index : number) {
     this.myDisp.nativeElement.style.display = 'block';
@@ -184,6 +179,17 @@ export class InboxComponent implements OnInit{
         FoldersComponent.emails.push(this.emails[checkbox.value])
       }
     });
+  }
+  filterAdvanced: boolean = false;
+  @ViewChild('filter') myFilter!: ElementRef;
+  toggle(){
+    this.filterAdvanced = !this.filterAdvanced;
+    if(this.filterAdvanced){
+      this.myFilter.nativeElement.style.display = 'block';
+    }
+    else{
+      this.myFilter.nativeElement.style.display = 'none';
+    }
   }
 }
 

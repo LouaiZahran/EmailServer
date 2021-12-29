@@ -33,6 +33,12 @@ export class SentComponent implements OnInit {
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
+  prioSort: boolean = true;
+  searchString: string = '';
+  filterTo:boolean = false;
+  filterFrom:boolean = false;
+  filterBody:boolean = false;
+  filterSubject:boolean = false;
   
   constructor(private api: ApiService) {}
 
@@ -60,8 +66,44 @@ export class SentComponent implements OnInit {
       }
     )
   }
+  search(){
+    if(!this.filterBody && !this.filterFrom && !this.filterSubject && !this.filterTo && this.searchString.length==0)
+      this.load();
+    var filters=Array<string>();
+    if(this.filterTo){
+      filters.push("to");
+    }
+    if(this.filterFrom){
+      filters.push("from");
+    }
+    if(this.filterBody){
+      filters.push("Body");
+    }
+    if(this.filterSubject){
+      filters.push("Subject");
+    }
+   this.api.filterEmails(Globals.username, "Inbox",filters,this.searchString).subscribe(
+    (mailList: Array<Email>) => {
+      this.allEmails = [];
+      mailList.forEach(
+        (email: Email) => {
+          this.allEmails.push(Email.createEmailFromObject(email));
+        }
+      )
+    },
+  () => {},
+  () => {
+    this.allEmails.reverse();
+    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+    for (let i=0;i<10;i++){
+      this.checkboxes[i].checked=false;
+    }
+    }
+  )
+     
+  }
   sortEmails(){
-    this.api.sortEmails(Globals.username, "Inbox").subscribe(
+    this.api.sortEmails(Globals.username, "Sent").subscribe(
       (mailList: Array<Email>) => {
         this.allEmails = [];
         mailList.forEach(
@@ -118,6 +160,17 @@ export class SentComponent implements OnInit {
   prev(){
     this.pageNumber -= 1;
     this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+  }
+  filterAdvanced: boolean = false;
+  @ViewChild('filter') myFilter!: ElementRef;
+  toggle(){
+    this.filterAdvanced = !this.filterAdvanced;
+    if(this.filterAdvanced){
+      this.myFilter.nativeElement.style.display = 'block';
+    }
+    else{
+      this.myFilter.nativeElement.style.display = 'none';
+    }
   }
 
 }

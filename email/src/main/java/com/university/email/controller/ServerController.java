@@ -68,29 +68,40 @@ public class ServerController {
         }
         return new ArrayList<>(pq);
     }
+    @GetMapping("/filterContacts")
+    public ArrayList<Contact> filterContacts(@RequestParam String username, @RequestParam String search){
+        UserInterface user = dao.findUserByUsername(username);
+        if(user.isNill() || user.getContacts() == null)
+            return null;
+        return user.findContact(search);
+    }
+
     @GetMapping("/filterEmails")
     public ArrayList<Email> filter(@RequestParam String username, @RequestParam String folder,
                                    @RequestParam ArrayList<String> filter,@RequestParam String search) {
         UserInterface user = dao.findUserByUsername(username);
         if(user.isNill() || user.getFolder(folder) == null)
             return null;
-        Criteria criteria=null;
+        Criteria criteria1=null;
+        Criteria criteria2=null;
+        Criteria criteria3=null;
+        Criteria criteria4=null;
         if(filter.contains("from")){
-            criteria=new CriteriaSender(search);
+            criteria1=new CriteriaSender(search);
         }
-        else if(filter.contains("to")){
-            criteria=new CriteriaReceiver(search);
+        if(filter.contains("to")){
+            criteria2=new CriteriaReceiver(search);
         }
-        else if(filter.contains("Body")){
-            criteria=new CriteriaBody(search);
+        Criteria or1=new OrCriteria(criteria1,criteria2);
+        if(filter.contains("Body")){
+            criteria3=new CriteriaBody(search);
         }
-        else if(filter.contains("Subject")){
-            criteria=new CriteriaSubject(search);
+        if(filter.contains("Subject")){
+            criteria4=new CriteriaSubject(search);
         }
-        else{
-            return new ArrayList<>();
-        }
-        return user.getFolder(folder).search(criteria);
+        Criteria or2 =new OrCriteria(criteria3,criteria4);
+        Criteria or3=new OrCriteria(or2,or1);
+        return user.getFolder(folder).search(or3);
     }
     @PostMapping("/saveDraft")
     public ResponseEntity<String> saveDraft(@RequestBody Email email){
