@@ -1,0 +1,18 @@
+<div class="container">
+    <form>
+      <div>
+        <label for="contact">contact</label><br>
+        <input ngModel name = "contact" #contact = "ngModel" type="text">
+      </div>
+
+      <div>
+        <label for="info">info</label><br>
+        <textarea ngModel name = "info" #info = "ngModel" type="text" cols="30" rows="10"></textarea>
+      </div>
+  
+      <div class="bottom">
+        <button class="add" (click) = "createContact(contact.value, info.value)">Add contact</button>
+      </div>
+  
+    </form>
+  </div>

@@ -9,7 +9,6 @@ import { Email } from '../email';
   styleUrls: ['./compose.component.css']
 })
 export class ComposeComponent implements OnInit {
-
   createEmail(receiver: string, subject:string, content:string){
     let receivers=receiver.split(" ");
     var priority = (<HTMLInputElement>document.getElementById("priority")).value;

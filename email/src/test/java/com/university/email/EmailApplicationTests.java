@@ -29,11 +29,6 @@ class EmailApplicationTests {
 		dao.setUsers(new ArrayList<>());
 	}
 	@Test
-	void addContact(){
-		dao.loadDAO();
-
-	}
-	@Test
 	void LoadTest(){
 		dao.loadDAO();
 		Queue<String> receivers=new LinkedList<>();
