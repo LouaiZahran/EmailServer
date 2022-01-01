@@ -1,4 +1,19 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<header>
+  <button class="search" (click)="search()"> <i class="material-icons">search</i> </button>
+  <input type="text" class="search" placeholder = "Search..." [(ngModel)]="searchString">
+  <button class="filter" (click)="toggle()"> <i class="material-icons">filter_list</i> </button>
+  <div class="filterAdvanced" #filter>
+    <input type="checkbox" id="to" [(ngModel)]="filterTo">
+    <label for="to">To</label>
+    <input type="checkbox" id="from" [(ngModel)]="filterFrom">
+    <label for="subject">From</label>
+    <input type="checkbox" id="subject" [(ngModel)]="filterSubject">
+    <label for="subject">Subject</label>
+    <input type="checkbox" id="body" [(ngModel)]="filterBody">
+    <label for="body">Body</label>
+  </div>
+</header>
 <div class="toolbox">
   <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleCheckboxes()"/>
   <a class="from">From</a>
@@ -8,8 +23,6 @@
 
 <div class="toolbox">
   <button title="Add to folder"><i class="material-icons">folder</i></button>
-  <button title="Mark as read" class="read"><i class="material-icons" (click)="markAsRead()">done_all</i></button>
-  <button title="Mark as unread"><i class="material-icons" (click)="markAsUnread()">done_all</i></button>
   <button title="Delete"><i class="material-icons" (click)="deleteEmails()">delete</i></button>
   <button title="prio" [(ngModel)] = "prioSort" (click)="sortEmails()"><i class="material-icons">sort</i></button>
   <button title="Previous" class="prev" [disabled] = "pageNumber == 1" (click)="prev()"><i class="material-icons">arrow_back</i></button>

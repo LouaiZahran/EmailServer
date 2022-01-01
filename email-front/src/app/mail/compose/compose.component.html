@@ -2,22 +2,25 @@
   <form>
     <div>
       <label for="to">To</label><br>
-      <input ngModel name = "to" #to = "ngModel" type="text" class="to">
+      <!-- <input ngModel name = "to" #to = "ngModel" type="text" class="to" value="1dasdas"> -->
+      <input [(ngModel)] = "to" name = "to" type="text" class="to">
     </div>
 
     <div>
       <label for="subject">Subject</label><br>
-      <input ngModel name = "subject" #subject = "ngModel" type="text" class="subject">
+      <!-- <input ngModel name = "subject" #subject = "ngModel" type="text" class="subject" value="subject()"> -->
+      <input [(ngModel)] = "subject" name = "subject" type="text" class="subject">
     </div>
 
     <div>
       <label for="content">Content</label><br>
-      <textarea ngModel name = "content" #content = "ngModel" type="text" cols="30" rows="10"></textarea>
+      <!-- <textarea ngModel name = "content" #content = "ngModel" type="text" cols="30" rows="10"></textarea> -->
+      <textarea [(ngModel)] = "content" name = "content"  type="text" cols="30" rows="10"></textarea>
     </div>
 
     <div class="bottom">
-      <div class="attah">
-        <input type="file" class="file[]" (change)= "attach($event)"  multiple="multiple">
+      <div class="attach">
+        <input type="file" class="file" (change)= "attach($event)"  multiple="multiple">
         <button class="upload" (click) = "upload()">Upload</button>
       </div>
       <select name="priority" id="priority">
@@ -26,8 +29,10 @@
         <option value="2">Medium</option>
         <option value="1">Low</option>
       </select>
-      <button class="send" (click) = "saveDraft(to.value, subject.value, content.value)">Save to draft</button>
-      <button class="send" (click) = "createEmail(to.value, subject.value, content.value)">Send</button>
+      <!-- <button class="send" (click) = "saveDraft(to.value, subject.value, content.value)">Save to draft</button>
+      <button class="send" (click) = "createEmail(to.value, subject.value, content.value)">Send</button> -->
+      <button class="send" (click) = "saveDraft()">Save to draft</button>
+      <button class="send" (click) = "createEmail()">Send</button>
     </div>
 
   </form>

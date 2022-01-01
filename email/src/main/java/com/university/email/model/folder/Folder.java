@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.servlet.tags.EditorAwareTag;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,10 @@ public class Folder {
     }
 
     public ArrayList<Email> search(Criteria criteria){
-        return criteria.meetCriteria(content);
+        ArrayList<Email> ret=criteria.meetCriteria(content);
+        if(ret.size()==0)
+            return new ArrayList<>();
+        return ret;
     }
 
     public void print(){

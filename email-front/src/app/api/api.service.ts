@@ -72,6 +72,18 @@ export class ApiService {
       }
     });
   }
+  filterContacts(username:string,search:string){
+    return this.http.get<Array<Contact>>(`${environment.api_url}/filterContacts`, 
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: {
+        "username": username,
+        "search":search,
+      }
+    });
+  }
 
   get(path: string): Observable<Array<Email>> {
     return this.http.get<Array<Email>>(`${environment.api_url}${path}`, httpOptions);

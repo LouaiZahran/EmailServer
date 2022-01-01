@@ -12,6 +12,6 @@ public class Credential{
     @Override
     public boolean equals(Object credential){
         Credential combination = (Credential) credential;
-        return username.equalsIgnoreCase(combination.getUsername()) && password.equals((combination.getPassword()));
+        return username.equals(combination.getUsername()) && password.equals((combination.getPassword()));
     }
 }

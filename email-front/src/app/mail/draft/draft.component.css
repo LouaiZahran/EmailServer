@@ -44,7 +44,7 @@
       top: 50%;
     }
   }
-  
+
   .close {
     font-size: 50px;
     margin-left: 95%;
@@ -54,7 +54,7 @@
   .close:hover {
     color: black;
   }
-  
+
   div.toolbox {
     width: 90%;
     height: 6.5%;
@@ -81,7 +81,7 @@
     color: #6bd30b;
     text-decoration: underline;
   }
-  
+
   div.toolbox button {
     color: #95979b;
     border: none;
@@ -114,7 +114,7 @@
   div.toolbox button:disabled {
     color: #95979b;
   }
-  
+
   div.row {
     margin: auto;
     margin-top: 3px;
@@ -134,7 +134,7 @@
   div.row.unread {
     font-weight: bold;
   }
-  
+
   span.to,
   span.subject {
     width: 38%;
@@ -181,6 +181,95 @@
     text-align: right;
     font-size: 15px;
     margin-left: 20px;
-    font-style: italic;
+    
+  }
+  button.edit{
+    color:#d4d5d8;
+    font-weight: bold;
+    background-color: #1D2127;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    top: 90
+  }
+  header {
+    height: 10%;
+    background-color: white;
+    display: flex;
+    padding: 5px;
+    margin: 0px;
+    justify-content: center;
+    align-items: center;
+  }
+  input.search {
+    width: 70%;
+    height: 80%;
+    text-align: left;
+    padding: 0 6%;
+    font-size: 20px;
+    background-color: #eee;
+    border: none;
+    color: #1d2127;
+    border-radius: 10px;
+  }
+  input.search:focus {
+    outline: 2px solid #d4d5d8;
   }
   
+header {
+  height: 10%;
+  background-color: white;
+  display: flex;
+  padding: 5px;
+  margin: 0px;
+  justify-content: center;
+  align-items: center;
+}
+input.search {
+  width: 70%;
+  height: 80%;
+  text-align: left;
+  padding: 0 6%;
+  font-size: 20px;
+  background-color: #eee;
+  border: none;
+  color: #1d2127;
+  border-radius: 10px;
+}
+input.search:focus {
+  outline: 2px solid #d4d5d8;
+}
+header button {
+  height: 64%;
+  background-color: #eee;
+  border: none;
+  color: #95979b;
+}
+button.search {
+  margin-right: -5%;
+  z-index: 1;
+}
+button.filter {
+  margin-left: -5%;
+  padding-top: 5px;
+}
+button.search:hover, button.filter:hover {
+  background-color: #d4d5d8;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.filterAdvanced{
+  position: absolute;
+  top: 50px;
+  right: 110px;
+  background-color: #eee;
+  display: none;
+  border-radius: 10px;
+  color: #95979b;
+}
+
+
+ 

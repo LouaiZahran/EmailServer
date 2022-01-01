@@ -1,3 +1,4 @@
+import { ComposeComponent } from './../compose/compose.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Globals } from 'src/app/globals/Globals';
@@ -33,7 +34,12 @@ export class DraftComponent implements OnInit {
   ]
   selectAll: boolean = false;
   pageNumber: number = 1;
-  
+  prioSort: boolean = true;
+  searchString: string = '';
+  filterTo:boolean = false;
+  filterFrom:boolean = false;
+  filterBody:boolean = false;
+  filterSubject:boolean = false;
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
@@ -43,6 +49,7 @@ export class DraftComponent implements OnInit {
   load(){
     this.api.getEmails(Globals.username, "Draft").subscribe(
       (mailList: Array<Email>) => {
+        this.allEmails = [];
         mailList.forEach(
           (email: Email) => {
             this.allEmails.push(Email.createEmailFromObject(email));
@@ -51,11 +58,84 @@ export class DraftComponent implements OnInit {
       },
     () => {},
     () => {
+      this.allEmails.reverse();
       this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
-    }
+      for (let i=0;i<10;i++){
+        this.checkboxes[i].checked=false;
+      }
+      }
     )
   }
+  search(){
+    if(!this.filterBody && !this.filterFrom && !this.filterSubject && !this.filterTo && this.searchString.length==0)
+      this.load();
+    var filters=Array<string>();
+    if(this.filterTo){
+      filters.push("to");
+    }
+    if(this.filterFrom){
+      filters.push("from");
+    }
+    if(this.filterBody){
+      filters.push("Body");
+    }
+    if(this.filterSubject){
+      filters.push("Subject");
+    }
+  this.api.filterEmails(Globals.username, "Draft",filters,this.searchString).subscribe(
+    (mailList: Array<Email>) => {
+      this.allEmails = [];
+      mailList.forEach(
+        (email: Email) => {
+          this.allEmails.push(Email.createEmailFromObject(email));
+        }
+      )
+    },
+  () => {},
+  () => {
+    this.allEmails.reverse();
+    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+    for (let i=0;i<10;i++){
+      this.checkboxes[i].checked=false;
+    }
+    }
+  )
+}
 
+sortEmails(){
+  this.prioSort=!this.prioSort;
+  if(this.prioSort){
+    this.load();
+    return;
+  }
+  this.api.sortEmails(Globals.username, "Draft").subscribe(
+    (mailList: Array<Email>) => {
+      this.allEmails = [];
+      mailList.forEach(
+        (email: Email) => {
+          this.allEmails.push(Email.createEmailFromObject(email));
+        }
+      )
+    },
+  () => {},
+  () => {
+    this.allEmails.reverse();
+    this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
+    for (let i=0;i<10;i++){
+      this.checkboxes[i].checked=false;
+    }
+  }
+  )
+}
+deleteEmails(){
+  for(let i = 0; i<10; i++){
+    if(!this.checkboxes[i].checked)
+      continue;
+    this.api.deleteEmail(this.allEmails.length-((this.pageNumber-1)*10+i)-1,"Draft").subscribe();
+  }
+
+  this.load();
+}
   on(index : number) {
     this.myDisp.nativeElement.style.display = 'block';
     this.to = this.emails[index].getTo();
@@ -63,6 +143,7 @@ export class DraftComponent implements OnInit {
     this.subject = this.emails[index].getSubject();
     this.content = this.emails[index].getBody();
     this.date = this.emails[index].getDate();
+
   }
   off(){
     this.myDisp.nativeElement.style.display = 'none';
@@ -83,6 +164,22 @@ export class DraftComponent implements OnInit {
     this.pageNumber -= 1;
     this.emails = this.allEmails.slice((this.pageNumber - 1) * 10, this.allEmails.length - (this.pageNumber - 1) * 10 > 10 ? this.pageNumber * 10 : this.allEmails.length);
   }
+  filterAdvanced: boolean = false;
+  @ViewChild('filter') myFilter!: ElementRef;
+  toggle(){
+    this.filterAdvanced = !this.filterAdvanced;
+    if(this.filterAdvanced){
+      this.myFilter.nativeElement.style.display = 'block';
+    }
+    else{
+      this.myFilter.nativeElement.style.display = 'none';
+    }
+  }
 
-
+  edit(){
+    ComposeComponent.draftTo = this.to;
+    ComposeComponent.draftSubject = this.subject;
+    ComposeComponent.draftContent = this.content;
+    ComposeComponent.draftEdit = true;
+  }
 }

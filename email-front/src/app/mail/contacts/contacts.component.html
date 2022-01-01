@@ -1,4 +1,8 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<header>
+  <button class="search" (click)="search()"> <i class="material-icons">search</i> </button>
+  <input type="text" class="search" placeholder = "Search..." [(ngModel)]="searchString">
+</header>
 <div class="toolbox">
   <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleCheckboxes()"/>
   <a class="name">Name</a>
